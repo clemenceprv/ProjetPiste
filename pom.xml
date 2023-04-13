@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.epul</groupId>
-	<artifactId>oeuvre</artifactId>
+	<artifactId>permispiste</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>oeuvre</name>
+	<name>permispiste</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -22,7 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>15</java.version>
-         <start-class>com.epul.oeuvre.OeuvreApplication </start-class>
+         <start-class>com.epul.permispiste.OeuvreApplication</start-class>
 	</properties>
 
 	<dependencies>
@@ -75,7 +75,7 @@
     </dependencies>
 
 	<build>
-		<finalName>ProjetOeuvre</finalName>
+		<finalName>ProjetPiste</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
