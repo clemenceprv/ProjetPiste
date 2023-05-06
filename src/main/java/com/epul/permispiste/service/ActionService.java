@@ -12,20 +12,8 @@ public class ActionService{
     @Autowired
     private ActionRepository uneActionRepository;
 
-
-
-
     public ActionEntity getUneActionID(int id) {
         return null;
     }
 
-    // on insère une action
-
-    public void ajouterAction(ActionEntity unA) {
-        try {
-
-        } catch (Exception e) {
-            throw new MonException("Insert", "Sql", e.getMessage());
-        }
-    }
 }
