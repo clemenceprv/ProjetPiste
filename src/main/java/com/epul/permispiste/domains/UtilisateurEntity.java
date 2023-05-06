@@ -8,13 +8,13 @@ import java.util.Collection;
 public class UtilisateurEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "NumUtil")
+    @Column(name = "numUtil")
     private int numUtil;
     @Basic
-    @Column(name = "NomUtil")
+    @Column(name = "nomUtil")
     private String nomUtil;
     @Basic
-    @Column(name = "MotPasse")
+    @Column(name = "motPasse")
     private String motPasse;
     @Basic
     @Column(name = "salt")
