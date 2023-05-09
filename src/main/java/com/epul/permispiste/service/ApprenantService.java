@@ -37,7 +37,7 @@ public class ApprenantService implements IApprenantService {
     //  ***************************************
     public List<ApprenantEntity> searchListeApprenants(String s) throws MonException {
         List<ApprenantEntity> apprenants;
-        String request = "SELECT l FROM ApprenantEntity l WHERE l.nomapprenant LIKE '%"+s+"%' OR l.prenomapprenant LIKE '%"+s+"%'";
+        String request = "SELECT l FROM ApprenantEntity l WHERE l.nomApprenant LIKE '%"+s+"%' OR l.prenomApprenant LIKE '%"+s+"%'";
         try {
             Session session = ServiceHibernate.currentSession();
             apprenants = session.createQuery(request, ApprenantEntity.class).getResultList();
@@ -132,7 +132,7 @@ public class ApprenantService implements IApprenantService {
 
     public Collection<InscriptionEntity> getInscritsByNumapprenant(int id){
         List<InscriptionEntity> inscriptions;
-        String request = "SELECT DISTINCT i FROM InscriptionEntity i JOIN FETCH i.jeuByNumjeu j JOIN FETCH j.missionsByNumjeu WHERE i.numapprenant =" + id + " ORDER BY i.datejour DESC";
+        String request = "SELECT l FROM InscriptionEntity l WHERE l.fkUser=" + id;
         try {
             Session session = ServiceHibernate.currentSession();
             inscriptions = session.createQuery(request, InscriptionEntity.class).getResultList();
@@ -142,11 +142,6 @@ public class ApprenantService implements IApprenantService {
             throw new MonException("Impossible d'accèder à la SessionFactory: ",  ex.getMessage());
         }
         return inscriptions;
-    }
-
-    @Autowired
-    public ApprenantService(ApprenantRepository ApprenantRepostory) {
-        this.unApprenantRepostory = ApprenantRepostory;
     }
 
 }

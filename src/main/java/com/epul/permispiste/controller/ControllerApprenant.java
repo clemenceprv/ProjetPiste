@@ -1,6 +1,8 @@
 package com.epul.permispiste.controller;
 
 
+import com.epul.permispiste.domains.ApprenantEntity;
+import com.epul.permispiste.mesExceptions.MonException;
 import com.epul.permispiste.service.ApprenantService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -72,8 +74,8 @@ public class ControllerApprenant {
         try {
             ApprenantService serviceApprenant = new ApprenantService();
             ApprenantEntity apprenant = new ApprenantEntity();
-            apprenant.setNomapprenant(request.getParameter("surname"));
-            apprenant.setPrenomapprenant(request.getParameter("forname"));
+            apprenant.setNomApprenant(request.getParameter("surname"));
+            apprenant.setPrenomApprenant(request.getParameter("forname"));
 
             serviceApprenant.insertApprenant(apprenant);
             destinationPage = "redirect: listeApprenant.htm";
@@ -132,8 +134,8 @@ public class ControllerApprenant {
         try {
             ApprenantService serviceApprenant = new ApprenantService();
             ApprenantEntity apprenant = serviceApprenant.adherentById(Integer.parseInt(request.getParameter("id")));
-            apprenant.setNomapprenant(request.getParameter("surname"));
-            apprenant.setPrenomapprenant(request.getParameter("forname"));
+            apprenant.setNomApprenant(request.getParameter("surname"));
+            apprenant.setPrenomApprenant(request.getParameter("forname"));
             serviceApprenant.update(apprenant);
 
             destinationPage = "redirect: listeApprenant.htm";

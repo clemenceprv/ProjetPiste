@@ -42,21 +42,6 @@ public class MissionService implements IMissionService {
         return missions;
     }
 
-    public MissionEntity getMissionWithObjectifsById(int id) {
-        MissionEntity missions;
-        String request = "SELECT m FROM MissionEntity m WHERE m.nummission=" + id;
-        try {
-            Session session = ServiceHibernate.currentSession();
-            List results = session.createQuery(request).getResultList();
-            missions = results.size() > 0 ? (MissionEntity) results.get(0) : null;
-            session.close();
-        } catch (Exception e) {
-            throw new MonException("Récupération de la mission impossible: ", e.getMessage());
-        }
-
-        return missions;
-    }
-
     public void insert(MissionEntity missionEntity) {
         Transaction tx;
         try {
