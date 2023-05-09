@@ -17,6 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @CrossOrigin
 public class ControllerApprenant {
+
+    //  ***************************************
+    //  Affichage de la liste des apprenants existantes dans la BD
+    //  ***************************************
     @RequestMapping(value = "listeApprenant.htm")
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String destinationPage;
@@ -32,7 +36,7 @@ public class ControllerApprenant {
     }
 
     //  ***************************************
-    //  On affiche la liste des apprenants recherché
+    //  On affiche la liste des apprenants recherchés
     //  ***************************************
     @GetMapping(value = "searchlisteApprenant.htm")
     public ModelAndView search(HttpServletRequest request) throws Exception {
@@ -66,7 +70,7 @@ public class ControllerApprenant {
     }
 
     //  ***************************************
-    //  On ajoute un apprenant à la base
+    //  On ajoute un apprenant à la BD
     //  ***************************************
     @RequestMapping(value = "inserterApprenant.htm")
     public ModelAndView inserterApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -89,7 +93,7 @@ public class ControllerApprenant {
     }
 
     //  ***************************************
-    //  On supprime un apprenant de la base
+    //  On supprime un apprenant de la BD
     //  ***************************************
     @RequestMapping(value = "supprimerApprenant.htm")
     public ModelAndView supprimerApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -108,7 +112,7 @@ public class ControllerApprenant {
     }
 
     //  ***************************************
-    //  On modifie un apprenant de la base
+    //  On modifie un apprenant de la BD
     //  ***************************************
     @RequestMapping(value = "pageModifierApprenant.htm")
     public ModelAndView pageModifierApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -126,7 +130,7 @@ public class ControllerApprenant {
     }
 
     //  ***************************************
-    //  On modifie un apprenant de la base
+    //  On modifie un apprenant de la BD
     //  ***************************************
     @RequestMapping(value = "modifierApprenant.htm")
     public ModelAndView modifierApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception {
