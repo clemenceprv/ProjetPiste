@@ -1,6 +1,8 @@
 package com.epul.permispiste.controller;
 
 
+import com.epul.permispiste.domains.ApprenantEntity;
+import com.epul.permispiste.mesExceptions.MonException;
 import com.epul.permispiste.service.ApprenantService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @CrossOrigin
 public class ControllerApprenant {
+
+    //  ***************************************
+    //  Affichage de la liste des apprenants existantes dans la BD
+    //  ***************************************
     @RequestMapping(value = "listeApprenant.htm")
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String destinationPage;
@@ -30,7 +36,7 @@ public class ControllerApprenant {
     }
 
     //  ***************************************
-    //  On affiche la liste des apprenants recherché
+    //  On affiche la liste des apprenants recherchés
     //  ***************************************
     @GetMapping(value = "searchlisteApprenant.htm")
     public ModelAndView search(HttpServletRequest request) throws Exception {
@@ -64,7 +70,7 @@ public class ControllerApprenant {
     }
 
     //  ***************************************
-    //  On ajoute un apprenant à la base
+    //  On ajoute un apprenant à la BD
     //  ***************************************
     @RequestMapping(value = "inserterApprenant.htm")
     public ModelAndView inserterApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -72,8 +78,8 @@ public class ControllerApprenant {
         try {
             ApprenantService serviceApprenant = new ApprenantService();
             ApprenantEntity apprenant = new ApprenantEntity();
-            apprenant.setNomapprenant(request.getParameter("surname"));
-            apprenant.setPrenomapprenant(request.getParameter("forname"));
+            apprenant.setNomApprenant(request.getParameter("surname"));
+            apprenant.setPrenomApprenant(request.getParameter("forname"));
 
             serviceApprenant.insertApprenant(apprenant);
             destinationPage = "redirect: listeApprenant.htm";
@@ -87,7 +93,7 @@ public class ControllerApprenant {
     }
 
     //  ***************************************
-    //  On supprime un apprenant de la base
+    //  On supprime un apprenant de la BD
     //  ***************************************
     @RequestMapping(value = "supprimerApprenant.htm")
     public ModelAndView supprimerApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -106,7 +112,7 @@ public class ControllerApprenant {
     }
 
     //  ***************************************
-    //  On modifie un apprenant de la base
+    //  On modifie un apprenant de la BD
     //  ***************************************
     @RequestMapping(value = "pageModifierApprenant.htm")
     public ModelAndView pageModifierApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -124,7 +130,7 @@ public class ControllerApprenant {
     }
 
     //  ***************************************
-    //  On modifie un apprenant de la base
+    //  On modifie un apprenant de la BD
     //  ***************************************
     @RequestMapping(value = "modifierApprenant.htm")
     public ModelAndView modifierApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -132,8 +138,8 @@ public class ControllerApprenant {
         try {
             ApprenantService serviceApprenant = new ApprenantService();
             ApprenantEntity apprenant = serviceApprenant.adherentById(Integer.parseInt(request.getParameter("id")));
-            apprenant.setNomapprenant(request.getParameter("surname"));
-            apprenant.setPrenomapprenant(request.getParameter("forname"));
+            apprenant.setNomApprenant(request.getParameter("surname"));
+            apprenant.setPrenomApprenant(request.getParameter("forname"));
             serviceApprenant.update(apprenant);
 
             destinationPage = "redirect: listeApprenant.htm";

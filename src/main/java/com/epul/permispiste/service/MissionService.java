@@ -13,6 +13,9 @@ import java.util.List;
 @Service
 public class MissionService implements IMissionService {
 
+    //  ***************************************
+    //  On récupère la liste des missions
+    //  ***************************************
     public List<MissionEntity> getAll() throws MonException {
         List<MissionEntity> missions;
         String request = "SELECT m FROM MissionEntity m";
@@ -28,6 +31,9 @@ public class MissionService implements IMissionService {
         return missions;
     }
 
+    //  ***************************************
+    //  Obtention d'une mission par son id
+    //  ***************************************
     public MissionEntity getMissionById(int id) {
         MissionEntity missions;
         String request = "SELECT m FROM MissionEntity m WHERE m.id=" + id;
@@ -42,21 +48,9 @@ public class MissionService implements IMissionService {
         return missions;
     }
 
-    public MissionEntity getMissionWithObjectifsById(int id) {
-        MissionEntity missions;
-        String request = "SELECT m FROM MissionEntity m WHERE m.nummission=" + id;
-        try {
-            Session session = ServiceHibernate.currentSession();
-            List results = session.createQuery(request).getResultList();
-            missions = results.size() > 0 ? (MissionEntity) results.get(0) : null;
-            session.close();
-        } catch (Exception e) {
-            throw new MonException("Récupération de la mission impossible: ", e.getMessage());
-        }
-
-        return missions;
-    }
-
+    //  ***************************************
+    //  Ajout d'une mission
+    //  ***************************************
     public void insert(MissionEntity missionEntity) {
         Transaction tx;
         try {
@@ -70,6 +64,9 @@ public class MissionService implements IMissionService {
         }
     }
 
+    //  ***************************************
+    //  Suppression d'une mission
+    //  ***************************************
     public void delete(MissionEntity missionEntity) {
         Transaction tx;
         try {
@@ -83,6 +80,9 @@ public class MissionService implements IMissionService {
         }
     }
 
+    //  ***************************************
+    //  Mise à jours d'une mission
+    //  ***************************************
     public void update(MissionEntity missionEntity) {
         Transaction tx;
         try {
