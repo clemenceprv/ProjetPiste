@@ -95,4 +95,36 @@ public class MissionService implements IMissionService {
             throw new MonException("Insertion de la mission impossible : ", e.getMessage());
         }
     }
+
+    //  ***************************************
+    //  Ajouter une action à une mission
+    //  ***************************************
+    public void addActionToMission(int idMission, int idAction) {
+        Transaction tx;
+        try {
+            Session session = ServiceHibernate.currentSession();
+            tx = session.beginTransaction();
+            session.createNativeQuery("INSERT INTO mission_action (idmission, idaction) VALUES (" + idMission + ", " + idAction + ")").executeUpdate();
+            tx.commit();
+            session.close();
+        } catch (Exception e) {
+            throw new MonException("Insertion de l'action impossible : ", e.getMessage());
+        }
+    }
+
+    //  ***************************************
+    //  Supprimer une action d'une mission
+    //  ***************************************
+    public void removeActionFromMission(int idMission, int idAction) {
+        Transaction tx;
+        try {
+            Session session = ServiceHibernate.currentSession();
+            tx = session.beginTransaction();
+            session.createNativeQuery("DELETE FROM mission_action WHERE idmission=" + idMission + " AND idaction=" + idAction).executeUpdate();
+            tx.commit();
+            session.close();
+        } catch (Exception e) {
+            throw new MonException("Suppression de l'action impossible : ", e.getMessage());
+        }
+    }
 }
