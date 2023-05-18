@@ -1,7 +1,5 @@
 package com.epul.permispiste.controller;
-
 import com.epul.permispiste.domains.MissionEntity;
-import com.epul.permispiste.service.JeuService;
 import com.epul.permispiste.service.MissionService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,9 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 @CrossOrigin
 public class ControllerMission {
 
-    //  ***************************************
-    //  Affichage de la liste des missions existantes dans la BD
-    //  ***************************************
     @GetMapping(value = "index_mission.htm")
     public ModelAndView index(HttpServletRequest request) throws Exception {
         String destinationPage;
@@ -47,10 +42,7 @@ public class ControllerMission {
         return new ModelAndView(destinationPage);
     }
 
-    //  ***************************************
-    //  Enregistre une nouvelle mission dans la BD
-    //  ***************************************
-    @PostMapping(value = "store_mission.htm")
+    @PostMapping(value = "save_mission.htm")
     public ModelAndView store(HttpServletRequest request) throws Exception {
         String destinationPage = "";
         try {
@@ -67,9 +59,6 @@ public class ControllerMission {
         return new ModelAndView(destinationPage);
     }
 
-    //  ***************************************
-    //  Modification d'une mission dans la BD
-    //  ***************************************
     @GetMapping(value = "edit_mission.htm")
     public ModelAndView edit(HttpServletRequest request) throws Exception {
         String destinationPage;
@@ -85,9 +74,6 @@ public class ControllerMission {
         return new ModelAndView(destinationPage);
     }
 
-    //  ***************************************
-    //  Mise à jour d'une mission dans la BD
-    //  ***************************************
     @PostMapping(value = "update_mission.htm")
     public ModelAndView update(HttpServletRequest request) throws Exception {
         String destinationPage = "";
@@ -105,9 +91,6 @@ public class ControllerMission {
         return new ModelAndView(destinationPage);
     }
 
-    //  ***************************************
-    //  Suppression d'une mission dans la BD
-    //  ***************************************
     @GetMapping(value = "delete_mission.htm")
     public RedirectView delete(HttpServletRequest request) throws Exception {
         MissionService serviceMission = new MissionService();

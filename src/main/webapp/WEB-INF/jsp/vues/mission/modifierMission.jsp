@@ -8,9 +8,50 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Modifier Mission</title>
 </head>
+<%@include file="../header.jsp" %>
 <body>
+<%@include file="../navigation.jsp" %>
+<div class="container">
+    <div class="row mt-4">
+        <div class="col">
+            <h1>Editer la mission : <span class="text-muted">${mission.libmission}</span></h1>
+        </div>
+    </div>
 
+    <div class="card">
+        <div class="card-body">
+            <form method="POST" action="<c:url value="/update_mission.htm" />">
+                <div class="col-sm-12 col-lg-7">
+                    <input type="hidden" name="id" value="${mission.nummission}">
+                    <div class="form-group">
+                        <label class="control-label">Libellé mission *</label>
+                        <input type="text" name="libmission" id="libmission" value="${mission.libmission}"
+                               class="form-control"
+                               placeholder="Exemple : Mission apollo" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Libellé jeu *</label>
+                        <select name="numJeu" id="list_jeux" class="form-control" required>
+                            <option value="">-- Sélectionner le jeu --</option>
+                            <c:forEach items="${jeux}" var="item2">
+                                <option value="${item2.numjeu}" ${mission.numjeu == item2.numjeu ? 'selected="selected"' : ''}>${item2.libellejeu}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+                <nav class="d-flex justify-content-end" aria-label="...">
+                    <a href="<c:url value="/index_mission.htm" />" class="btn btn-secondary mr-2">Annuler</a>
+                    <button type="submit" class="btn btn-info pull-right">
+                        Modifier
+                    </button>
+                </nav>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%@include file="../footer.jsp" %>
 </body>
 </html>

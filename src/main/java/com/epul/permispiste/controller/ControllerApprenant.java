@@ -18,9 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 @CrossOrigin
 public class ControllerApprenant {
 
-    //  ***************************************
-    //  Affichage de la liste des apprenants existantes dans la BD
-    //  ***************************************
     @RequestMapping(value = "listeApprenant.htm")
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String destinationPage;
@@ -35,9 +32,6 @@ public class ControllerApprenant {
         return new ModelAndView(destinationPage);
     }
 
-    //  ***************************************
-    //  On affiche la liste des apprenants recherchés
-    //  ***************************************
     @GetMapping(value = "searchlisteApprenant.htm")
     public ModelAndView search(HttpServletRequest request) throws Exception {
         String destinationPage;
@@ -51,9 +45,6 @@ public class ControllerApprenant {
         return new ModelAndView(destinationPage);
     }
 
-    //  ***************************************
-    //  On affiche la page pour ajouter un apprenant
-    //  ***************************************
     @RequestMapping(value = "ajouterApprenant.htm")
     public ModelAndView ajouterApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String destinationPage;
@@ -69,9 +60,6 @@ public class ControllerApprenant {
         return new ModelAndView(destinationPage);
     }
 
-    //  ***************************************
-    //  On ajoute un apprenant à la BD
-    //  ***************************************
     @RequestMapping(value = "inserterApprenant.htm")
     public ModelAndView inserterApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String destinationPage = "";
@@ -92,9 +80,6 @@ public class ControllerApprenant {
         return new ModelAndView(destinationPage);
     }
 
-    //  ***************************************
-    //  On supprime un apprenant de la BD
-    //  ***************************************
     @RequestMapping(value = "supprimerApprenant.htm")
     public ModelAndView supprimerApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String destinationPage;
@@ -111,9 +96,6 @@ public class ControllerApprenant {
         return new ModelAndView(destinationPage);
     }
 
-    //  ***************************************
-    //  On modifie un apprenant de la BD
-    //  ***************************************
     @RequestMapping(value = "pageModifierApprenant.htm")
     public ModelAndView pageModifierApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String destinationPage;
@@ -129,9 +111,6 @@ public class ControllerApprenant {
         return new ModelAndView(destinationPage);
     }
 
-    //  ***************************************
-    //  On modifie un apprenant de la BD
-    //  ***************************************
     @RequestMapping(value = "modifierApprenant.htm")
     public ModelAndView modifierApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String destinationPage;

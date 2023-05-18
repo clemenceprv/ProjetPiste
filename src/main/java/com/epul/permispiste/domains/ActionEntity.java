@@ -176,4 +176,8 @@ public class ActionEntity {
     public void setInscriptionActionsById(Collection<InscriptionActionEntity> inscriptionActionsById) {
         this.inscriptionActionsById = inscriptionActionsById;
     }
+
+    public void setActionWording(String wording) {
+        this.wording = wording;
+    }
 }
