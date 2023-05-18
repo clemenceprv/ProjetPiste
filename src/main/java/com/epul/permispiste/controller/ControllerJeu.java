@@ -46,32 +46,24 @@ public class ControllerJeu {
         return new ModelAndView(destinationPage);
     }
 */
-    public List<ActionEntity> verifierDependances(ActionEntity action, List<ActionEntity> listeActionsPossibles, InscriptionActionEntity inscription)
+    public List<ActionEntity> verifierDependances(ActionEntity action, InscriptionActionEntity inscription)
     {
         ArrayList<ActionEntity> actionsAAjouter = new ArrayList<>();
         while (action.getFkAction() != null)
         {
             ActionEntity actionMere = actionWRepoService.getActionById(action.getFkAction());
-            InscriptionActionEntity inscriptionActionMere = inscriptionActionService.getInscriptionActionByIdAction(actionMere.getId(), inscription.getId());
 
-            if (listeActionsPossibles.contains(actionMere))
+            InscriptionActionEntity inscriptionActionMere = inscriptionActionService.getInscriptionActionByIdAction(actionMere.getId(), inscription.getFkInscription());
+
+            if (actionMere.getScoreMinimum() > inscriptionActionMere.getScore())
             {
-                actionsAAjouter.add(action);
+                actionsAAjouter = new ArrayList<>();
                 break;
             }
             else
             {
-                System.out.println("actionMere.getScoreMinimum() : " + actionMere.getScoreMinimum());
-                if (actionMere.getScoreMinimum() > inscriptionActionMere.getScore())
-                {
-                    actionsAAjouter = new ArrayList<>();
-                    break;
-                }
-                else
-                {
-                    actionsAAjouter.add(action);
-                    action = actionMere;
-                }
+                actionsAAjouter.add(action);
+                action = actionMere;
             }
         }
         return actionsAAjouter;
@@ -85,11 +77,8 @@ public class ControllerJeu {
         List<InscriptionActionEntity> listeInscriptionActions = null;
         List<InscriptionEntity> listeInscriptionsPourUtilisateur = null;
         List<ActionEntity> listeActionsPossibles = new ArrayList<>();
-        List<String> listeDerniersScore = new ArrayList<>();
-        List<JeuEntity> listeJeuxPossibles = null;
 
         try {
-            System.out.println("idApprenant : " + idApprenant);
             listeInscriptionsPourUtilisateur = inscriptionService.getInscriptionsByIdUsers(idApprenant);
             for (InscriptionEntity inscription : listeInscriptionsPourUtilisateur) {
                 listeInscriptionActions = inscriptionActionService.getInscriptionActionsById(inscription.getId());
@@ -103,18 +92,13 @@ public class ControllerJeu {
                     }
                     else
                     {
-                        List<ActionEntity> actionsAAjouter = new ArrayList<>();
-                        boolean ajouter = true;
+                        List<ActionEntity> actionsAAjouter = verifierDependances(action,inscriptionAction);
 
-                        if (ajouter)
+                        for (ActionEntity actionAAjouter : actionsAAjouter)
                         {
-                            for (ActionEntity actionAAjouter : actionsAAjouter)
-                            {
-                                if (!listeActionsPossibles.contains(actionAAjouter))
-                                    listeActionsPossibles.add(actionAAjouter);
-                            }
+                            if (!listeActionsPossibles.contains(actionAAjouter))
+                                listeActionsPossibles.add(actionAAjouter);
                         }
-
                     }
                 }
             }
