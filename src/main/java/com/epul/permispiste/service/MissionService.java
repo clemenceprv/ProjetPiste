@@ -2,12 +2,10 @@ package com.epul.permispiste.service;
 
 import com.epul.permispiste.domains.MissionEntity;
 import com.epul.permispiste.mesExceptions.MonException;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -25,7 +23,7 @@ public class MissionService implements IMissionService {
             missions = session.createQuery(request, MissionEntity.class).getResultList();
             session.close();
         } catch (Exception e) {
-            throw new MonException("Impossible d'accéder à la SessionFactory: ", e.getMessage());
+            throw e;
         }
 
         return missions;
@@ -42,7 +40,7 @@ public class MissionService implements IMissionService {
             missions = (MissionEntity) session.createQuery(request).getResultList().get(0);
             session.close();
         } catch (Exception e) {
-            throw new MonException("Récupération de la mission impossible: ", e.getMessage());
+            throw e;
         }
 
         return missions;
@@ -60,7 +58,7 @@ public class MissionService implements IMissionService {
             tx.commit();
             session.close();
         } catch (Exception e) {
-            throw new MonException("Insertion de la mission impossible : ", e.getMessage());
+            throw e;
         }
     }
 
@@ -76,7 +74,7 @@ public class MissionService implements IMissionService {
             tx.commit();
             session.close();
         } catch (Exception e) {
-            throw new MonException("Insertion de la mission impossible : ", e.getMessage());
+            throw e;
         }
     }
 
@@ -92,7 +90,7 @@ public class MissionService implements IMissionService {
             tx.commit();
             session.close();
         } catch (Exception e) {
-            throw new MonException("Insertion de la mission impossible : ", e.getMessage());
+            throw e;
         }
     }
 }

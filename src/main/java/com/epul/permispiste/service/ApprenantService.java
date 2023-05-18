@@ -3,11 +3,9 @@ package com.epul.permispiste.service;
 import com.epul.permispiste.domains.ApprenantEntity;
 import com.epul.permispiste.domains.InscriptionEntity;
 import com.epul.permispiste.mesExceptions.MonException;
-import com.epul.permispiste.repositories.ApprenantRepository;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -27,7 +25,7 @@ public class ApprenantService implements IApprenantService {
             apprenants = session.createQuery(request, ApprenantEntity.class).getResultList();
             session.close();
         } catch (HibernateException ex) {
-            throw new MonException("Impossible d'accéder à la SessionFactory: ",  ex.getMessage());
+            throw ex;
         }
         return apprenants;
     }
@@ -43,7 +41,7 @@ public class ApprenantService implements IApprenantService {
             apprenants = session.createQuery(request, ApprenantEntity.class).getResultList();
             session.close();
         } catch (HibernateException ex) {
-            throw new MonException("Impossible d'accéder à la SessionFactory: ",  ex.getMessage());
+            throw ex;
         }
         return apprenants;
     }
@@ -63,10 +61,10 @@ public class ApprenantService implements IApprenantService {
             ex.printStackTrace();
             if (tx != null)
                 tx.rollback();
-            throw new MonException("Impossible d'insérer",  ex.getMessage());
+            throw ex;
         } catch (Exception ex) {
             ex.printStackTrace();
-            throw new MonException("Impossible d'insérer",  ex.getMessage());
+            throw ex;
         }
     }
 
@@ -82,7 +80,7 @@ public class ApprenantService implements IApprenantService {
             session.close();
         } catch (HibernateException ex) {
             ex.printStackTrace();
-            throw new MonException("Impossible d'accèder à la SessionFactory: ",  ex.getMessage());
+            throw ex;
         }
         return apprenants.get(0);
     }
@@ -106,10 +104,10 @@ public class ApprenantService implements IApprenantService {
             if (tx != null) {
                 tx.rollback();
             }
-            throw new MonException("Impossible d'effacer",  ex.getMessage());
+            throw ex;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new MonException("Impossible d'accèder à la SessionFactory: ",  e.getMessage());
+            throw e;
         }
     }
 
@@ -126,7 +124,7 @@ public class ApprenantService implements IApprenantService {
             session.close();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new MonException("Insertion de l'action impossible : ", e.getMessage());
+            throw e;
         }
     }
 
@@ -139,9 +137,10 @@ public class ApprenantService implements IApprenantService {
             session.close();
         } catch (HibernateException ex) {
             ex.printStackTrace();
-            throw new MonException("Impossible d'accèder à la SessionFactory: ",  ex.getMessage());
+            throw ex;
         }
         return inscriptions;
     }
+
 
 }

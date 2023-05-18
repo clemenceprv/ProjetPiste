@@ -11,35 +11,27 @@ public class ActionEntity {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "fk_action", insertable = false, updatable = false)
+    @Column(name = "fk_action")
     private Integer fkAction;
     @Basic
     @Column(name = "wording")
     private String wording;
     @Basic
-    @Column(name = "scoreMinimum")
+    @Column(name = "score_minimum")
     private Integer scoreMinimum;
     @ManyToOne
-    @JoinColumn(name = "fk_action", referencedColumnName = "id")
+    @JoinColumn(name = "fk_action", referencedColumnName = "id", insertable = false, updatable = false)
     private ActionEntity actionByFkAction;
     @OneToMany(mappedBy = "actionByFkAction")
     private Collection<ActionEntity> actionsById;
     @OneToMany(mappedBy = "actionByFkAction")
-    private Collection<ActionCalendrierApprenantEntity> actionCalendrierApprenantsById;
-    @OneToMany(mappedBy = "actionByFkAction")
-    private Collection<ActionJeuEntity> actionJeusById;
-    @OneToMany(mappedBy = "actionByFkAction")
     private Collection<ActionMissionEntity> actionMissionsById;
-    @OneToMany(mappedBy = "actionByFkAction")
-    private Collection<ActionObjectifEntity> actionObjectifsById;
-    @OneToMany(mappedBy = "actionByFkAction")
-    private Collection<ActionRegleEntity> actionReglesById;
-    @OneToMany(mappedBy = "actionByFkAction")
-    private Collection<ApprenantJeuCalendrierEntity> apprenantJeuCalendriersById;
     @OneToMany(mappedBy = "actionByFkAction")
     private Collection<IndicatorEntity> indicatorsById;
     @OneToMany(mappedBy = "actionByFkAction")
     private Collection<InscriptionActionEntity> inscriptionActionsById;
+    @OneToMany(mappedBy = "actionByFkAction")
+    private Collection<JeuEntity> jeusById;
 
     public int getId() {
         return id;
@@ -113,52 +105,12 @@ public class ActionEntity {
         this.actionsById = actionsById;
     }
 
-    public Collection<ActionCalendrierApprenantEntity> getActionCalendrierApprenantsById() {
-        return actionCalendrierApprenantsById;
-    }
-
-    public void setActionCalendrierApprenantsById(Collection<ActionCalendrierApprenantEntity> actionCalendrierApprenantsById) {
-        this.actionCalendrierApprenantsById = actionCalendrierApprenantsById;
-    }
-
-    public Collection<ActionJeuEntity> getActionJeusById() {
-        return actionJeusById;
-    }
-
-    public void setActionJeusById(Collection<ActionJeuEntity> actionJeusById) {
-        this.actionJeusById = actionJeusById;
-    }
-
     public Collection<ActionMissionEntity> getActionMissionsById() {
         return actionMissionsById;
     }
 
     public void setActionMissionsById(Collection<ActionMissionEntity> actionMissionsById) {
         this.actionMissionsById = actionMissionsById;
-    }
-
-    public Collection<ActionObjectifEntity> getActionObjectifsById() {
-        return actionObjectifsById;
-    }
-
-    public void setActionObjectifsById(Collection<ActionObjectifEntity> actionObjectifsById) {
-        this.actionObjectifsById = actionObjectifsById;
-    }
-
-    public Collection<ActionRegleEntity> getActionReglesById() {
-        return actionReglesById;
-    }
-
-    public void setActionReglesById(Collection<ActionRegleEntity> actionReglesById) {
-        this.actionReglesById = actionReglesById;
-    }
-
-    public Collection<ApprenantJeuCalendrierEntity> getApprenantJeuCalendriersById() {
-        return apprenantJeuCalendriersById;
-    }
-
-    public void setApprenantJeuCalendriersById(Collection<ApprenantJeuCalendrierEntity> apprenantJeuCalendriersById) {
-        this.apprenantJeuCalendriersById = apprenantJeuCalendriersById;
     }
 
     public Collection<IndicatorEntity> getIndicatorsById() {
@@ -175,5 +127,13 @@ public class ActionEntity {
 
     public void setInscriptionActionsById(Collection<InscriptionActionEntity> inscriptionActionsById) {
         this.inscriptionActionsById = inscriptionActionsById;
+    }
+
+    public Collection<JeuEntity> getJeusById() {
+        return jeusById;
+    }
+
+    public void setJeusById(Collection<JeuEntity> jeusById) {
+        this.jeusById = jeusById;
     }
 }

@@ -4,10 +4,7 @@ package com.epul.permispiste.controller;
 import com.epul.permispiste.domains.ApprenantEntity;
 import com.epul.permispiste.mesExceptions.MonException;
 import com.epul.permispiste.service.ApprenantService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -150,4 +147,7 @@ public class ControllerApprenant {
         }
         return new ModelAndView(destinationPage);
     }
+
+
+
 }

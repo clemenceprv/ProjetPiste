@@ -8,13 +8,13 @@ import java.util.Collection;
 public class UtilisateurEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "numUtil")
+    @Column(name = "num_util")
     private int numUtil;
     @Basic
-    @Column(name = "nomUtil")
+    @Column(name = "nom_util")
     private String nomUtil;
     @Basic
-    @Column(name = "motPasse")
+    @Column(name = "mot_passe")
     private String motPasse;
     @Basic
     @Column(name = "salt")
@@ -33,6 +33,8 @@ public class UtilisateurEntity {
     private String forename;
     @OneToMany(mappedBy = "utilisateurByFkUser")
     private Collection<InscriptionEntity> inscriptionsByNumUtil;
+    @OneToMany(mappedBy = "utilisateurByFkUtilisateur")
+    private Collection<UtilisateurJeuEntity> utilisateurJeusByNumUtil;
 
     public int getNumUtil() {
         return numUtil;
@@ -136,5 +138,13 @@ public class UtilisateurEntity {
 
     public void setInscriptionsByNumUtil(Collection<InscriptionEntity> inscriptionsByNumUtil) {
         this.inscriptionsByNumUtil = inscriptionsByNumUtil;
+    }
+
+    public Collection<UtilisateurJeuEntity> getUtilisateurJeusByNumUtil() {
+        return utilisateurJeusByNumUtil;
+    }
+
+    public void setUtilisateurJeusByNumUtil(Collection<UtilisateurJeuEntity> utilisateurJeusByNumUtil) {
+        this.utilisateurJeusByNumUtil = utilisateurJeusByNumUtil;
     }
 }

@@ -21,7 +21,7 @@ public class InscriptionEntity {
     @Column(name = "date")
     private Date date;
     @ManyToOne
-    @JoinColumn(name = "fk_user", referencedColumnName = "NumUtil", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "fk_user", referencedColumnName = "num_util", nullable = false, insertable = false, updatable = false)
     private UtilisateurEntity utilisateurByFkUser;
     @ManyToOne
     @JoinColumn(name = "fk_mission", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)

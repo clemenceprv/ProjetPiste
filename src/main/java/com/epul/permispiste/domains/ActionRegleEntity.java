@@ -11,30 +11,32 @@ public class ActionRegleEntity {
     private int id;
     @Basic
     @Column(name = "fk_action")
-    private int fkAction;
+    private Integer fkAction;
     @Basic
     @Column(name = "fk_regle")
-    private int fkRegle;
-    @ManyToOne
-    @JoinColumn(name = "fk_action", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private ActionEntity actionByFkAction;
-    @ManyToOne
-    @JoinColumn(name = "fk_regle", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private RegleEntity regleByFkRegle;
+    private Integer fkRegle;
 
-    public int getFkAction() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Integer getFkAction() {
         return fkAction;
     }
 
-    public void setFkAction(int fkAction) {
+    public void setFkAction(Integer fkAction) {
         this.fkAction = fkAction;
     }
 
-    public int getFkRegle() {
+    public Integer getFkRegle() {
         return fkRegle;
     }
 
-    public void setFkRegle(int fkRegle) {
+    public void setFkRegle(Integer fkRegle) {
         this.fkRegle = fkRegle;
     }
 
@@ -45,32 +47,18 @@ public class ActionRegleEntity {
 
         ActionRegleEntity that = (ActionRegleEntity) o;
 
-        if (fkAction != that.fkAction) return false;
-        if (fkRegle != that.fkRegle) return false;
+        if (id != that.id) return false;
+        if (fkAction != null ? !fkAction.equals(that.fkAction) : that.fkAction != null) return false;
+        if (fkRegle != null ? !fkRegle.equals(that.fkRegle) : that.fkRegle != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = fkAction;
-        result = 31 * result + fkRegle;
+        int result = id;
+        result = 31 * result + (fkAction != null ? fkAction.hashCode() : 0);
+        result = 31 * result + (fkRegle != null ? fkRegle.hashCode() : 0);
         return result;
-    }
-
-    public ActionEntity getActionByFkAction() {
-        return actionByFkAction;
-    }
-
-    public void setActionByFkAction(ActionEntity actionByFkAction) {
-        this.actionByFkAction = actionByFkAction;
-    }
-
-    public RegleEntity getRegleByFkRegle() {
-        return regleByFkRegle;
-    }
-
-    public void setRegleByFkRegle(RegleEntity regleByFkRegle) {
-        this.regleByFkRegle = regleByFkRegle;
     }
 }

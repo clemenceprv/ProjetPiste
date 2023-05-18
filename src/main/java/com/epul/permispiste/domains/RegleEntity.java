@@ -1,7 +1,6 @@
 package com.epul.permispiste.domains;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
 @Table(name = "regle", schema = "projetpermis1", catalog = "")
@@ -11,13 +10,11 @@ public class RegleEntity {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "libRegle")
+    @Column(name = "lib_regle")
     private String libRegle;
     @Basic
-    @Column(name = "scoreMin")
-    private int scoreMin;
-    @OneToMany(mappedBy = "regleByFkRegle")
-    private Collection<ActionRegleEntity> actionReglesById;
+    @Column(name = "score_min")
+    private Integer scoreMin;
 
     public int getId() {
         return id;
@@ -35,11 +32,11 @@ public class RegleEntity {
         this.libRegle = libRegle;
     }
 
-    public int getScoreMin() {
+    public Integer getScoreMin() {
         return scoreMin;
     }
 
-    public void setScoreMin(int scoreMin) {
+    public void setScoreMin(Integer scoreMin) {
         this.scoreMin = scoreMin;
     }
 
@@ -51,8 +48,8 @@ public class RegleEntity {
         RegleEntity that = (RegleEntity) o;
 
         if (id != that.id) return false;
-        if (scoreMin != that.scoreMin) return false;
         if (libRegle != null ? !libRegle.equals(that.libRegle) : that.libRegle != null) return false;
+        if (scoreMin != null ? !scoreMin.equals(that.scoreMin) : that.scoreMin != null) return false;
 
         return true;
     }
@@ -61,15 +58,7 @@ public class RegleEntity {
     public int hashCode() {
         int result = id;
         result = 31 * result + (libRegle != null ? libRegle.hashCode() : 0);
-        result = 31 * result + scoreMin;
+        result = 31 * result + (scoreMin != null ? scoreMin.hashCode() : 0);
         return result;
-    }
-
-    public Collection<ActionRegleEntity> getActionReglesById() {
-        return actionReglesById;
-    }
-
-    public void setActionReglesById(Collection<ActionRegleEntity> actionReglesById) {
-        this.actionReglesById = actionReglesById;
     }
 }
