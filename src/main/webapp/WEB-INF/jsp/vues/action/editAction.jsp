@@ -13,15 +13,19 @@
 
 <body>
 <%@include file="../navigation.jsp" %>
-<h1>Ajouter une action</h1>
-<form method="post" action="/action/add">
+<h1>Modifier une action</h1>
+<form method="post" action="/action/edit">
+    <div class="form-group">
+        <label for="id">Id</label>
+        <input type="number" class="form-control" id="id" name="id" readonly="readonly" value="${action.id}">
+    </div>
     <div class="form-group">
         <label for="libelle">Libellé</label>
-        <input type="text" class="form-control" id="libelle" name="libelle">
+        <input type="text" class="form-control" id="libelle" name="libelle" value="${action.wording}">
     </div>
     <div class="form-group">
         <label for="scoreMin">Score minimum</label>
-        <input type="number" class="form-control" id="scoreMin" name="scoreMin">
+        <input type="number" class="form-control" id="scoreMin" name="scoreMin" value="${action.scoreMinimum}">
     </div>
     <button type="submit" class="btn btn-primary">Enregistrer</button>
 </form>
