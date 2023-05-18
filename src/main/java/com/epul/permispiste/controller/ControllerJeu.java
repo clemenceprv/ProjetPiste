@@ -46,7 +46,7 @@ public class ControllerJeu {
         return new ModelAndView(destinationPage);
     }
 */
-    public List<ActionEntity> verifierDependances(ActionEntity action, List<ActionEntity> listeActionsPossibles)
+    public List<ActionEntity> verifierDependances(ActionEntity action, List<ActionEntity> listeActionsPossibles, InscriptionActionEntity inscription)
     {
         ArrayList<ActionEntity> actionsAAjouter = new ArrayList<>();
         while (action.getFkAction() != null)
