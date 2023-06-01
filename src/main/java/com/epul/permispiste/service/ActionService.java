@@ -3,103 +3,51 @@ package com.epul.permispiste.service;
 import com.epul.permispiste.domains.ActionEntity;
 import com.epul.permispiste.mesExceptions.MonException;
 import com.epul.permispiste.repositories.ActionRepository;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ActionService{
 
     @Autowired
-    private ActionRepository uneActionRepository;
+    private ActionRepository actionRepository;
 
-    public List<ActionEntity> getAll() throws MonException {
-        List<ActionEntity> actions;
-        String request = "SELECT a FROM ActionEntity a";
-
+    public ActionEntity getAction(int id) {
+        ActionEntity action = null;
         try {
-            Session session = ServiceHibernate.currentSession();
-            actions = session.createQuery(request, ActionEntity.class).getResultList();
-            session.close();
+            action = actionRepository.findById(id).orElse(action);
         } catch (Exception e) {
-            throw new MonException("Impossible d'accéder à la SessionFactory: ", e.getMessage());
+            System.out.println(e);
         }
-
-        return actions;
-    }
-
-    public ActionEntity getActionById(String id) {
-        ActionEntity action;
-        String request = "SELECT a FROM ActionEntity a WHERE a.numaction = " + id;
-        try {
-            Session session = ServiceHibernate.currentSession();
-            List results = session.createQuery(request).getResultList();
-            action = results.size() > 0 ? (ActionEntity) results.get(0) : null;
-            session.close();
-        } catch (Exception e) {
-            throw new MonException("Récupération de l'action impossible: ", e.getMessage());
-        }
-
         return action;
     }
 
-    public void insert(ActionEntity actionEntity) {
-        Transaction tx;
+    public List<ActionEntity> getAllAction() {
+        List<ActionEntity> actions=null;
         try {
-            Session session = ServiceHibernate.currentSession();
-            tx = session.beginTransaction();
-            session.save(actionEntity);
-            tx.commit();
-            session.close();
+            actions= actionRepository.findAll();
         } catch (Exception e) {
-            throw new MonException("Insertion de l'action impossible : ", e.getMessage());
-        }
-    }
-
-    public void delete(ActionEntity actionEntity) {
-        Transaction tx;
-        try {
-            Session session = ServiceHibernate.currentSession();
-            tx = session.beginTransaction();
-            session.delete(actionEntity);
-            tx.commit();
-            session.close();
-        } catch (Exception e) {
-            throw new MonException("Insertion de l'action impossible : ", e.getMessage());
-        }
-    }
-
-    public void update(ActionEntity actionEntity) {
-        Transaction tx;
-        try {
-            Session session = ServiceHibernate.currentSession();
-            tx = session.beginTransaction();
-            session.merge(actionEntity);
-            tx.commit();
-            session.close();
-        } catch (Exception e) {
-            throw new MonException("Insertion de l'action impossible : ", e.getMessage());
-        }
-    }
-
-    public Collection<ActionEntity> getActionByObjectif(int id){
-        List<ActionEntity> actions;
-        String request = "SELECT a FROM ActionEntity a JOIN FETCH a.estAssociesByNumaction e WHERE e.numobjectif =" + id;
-        try {
-            Session session = ServiceHibernate.currentSession();
-            actions = session.createQuery(request, ActionEntity.class).getResultList();
-            session.close();
-        } catch (HibernateException ex) {
-            ex.printStackTrace();
-            throw new MonException("Impossible d'accèder à la SessionFactory: ",  ex.getMessage());
+            System.out.println(e);
         }
         return actions;
     }
 
+    public void addAction(ActionEntity actionEntity) {
+        actionRepository.save(actionEntity);
+    }
 
+    public void editAction(ActionEntity actionEntity) {
+        ActionEntity action = actionRepository.findById(actionEntity.getId()).get();
+        action.setWording(actionEntity.getWording());
+        action.setScoreMinimum(actionEntity.getScoreMinimum());
+        actionRepository.save(action);
+    }
+
+    public void delete(int id) {
+        ActionEntity action = actionRepository.findById(id).get();
+        actionRepository.delete(action);
+    }
 }

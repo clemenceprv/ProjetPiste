@@ -41,7 +41,7 @@ public class ControllerLogin {
     ///
     ////
     @RequestMapping(method = RequestMethod.POST, value = "/getLogin")
-    public RedirectView controleLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView controleLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String destinationPage;
         UtilisateurEntity unUtilisateur= new UtilisateurEntity();
         HttpSession session;
@@ -67,7 +67,7 @@ public class ControllerLogin {
             destinationPage = "/vues/Erreur";
         }
 
-        return new RedirectView(destinationPage);
+        return new ModelAndView(destinationPage);
     }
 
 }
