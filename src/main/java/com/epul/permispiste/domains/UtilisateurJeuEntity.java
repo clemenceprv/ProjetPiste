@@ -11,19 +11,19 @@ public class UtilisateurJeuEntity {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "fk_utilisateur")
+    @Column(name = "fk_utilisateur", insertable = false, updatable = false)
     private Integer fkUtilisateur;
     @Basic
-    @Column(name = "fk_jeu")
+    @Column(name = "fk_jeu", insertable = false, updatable = false)
     private int fkJeu;
     @Basic
     @Column(name = "calendrier")
     private Date calendrier;
     @ManyToOne
-    @JoinColumn(name = "fk_utilisateur", referencedColumnName = "num_util", insertable = false, updatable = false)
+    @JoinColumn(name = "fk_utilisateur", referencedColumnName = "num_util", nullable = false)
     private UtilisateurEntity utilisateurByFkUtilisateur;
     @ManyToOne
-    @JoinColumn(name = "fk_jeu", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "fk_jeu", referencedColumnName = "id", nullable = false)
     private JeuEntity jeuByFkJeu;
 
     public int getId() {

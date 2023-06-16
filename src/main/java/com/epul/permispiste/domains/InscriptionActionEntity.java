@@ -25,7 +25,7 @@ public class InscriptionActionEntity {
     @JoinColumn(name = "fk_inscription", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private InscriptionEntity inscriptionByFkInscription;
     @ManyToOne
-    @JoinColumn(name = "fk_action", referencedColumnName = "id", nullable = false,  insertable = false, updatable = false)
+    @JoinColumn(name = "fk_action", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private ActionEntity actionByFkAction;
 
     public int getId() {

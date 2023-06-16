@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ActionRepository extends JpaRepository<ActionEntity, Integer> {
 
-        public ActionEntity findById(int id);
+        public ActionEntity findActionEntityById(int id);
 
 }
 

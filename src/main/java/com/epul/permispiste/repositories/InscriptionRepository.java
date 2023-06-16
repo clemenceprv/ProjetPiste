@@ -1,7 +1,6 @@
 package com.epul.permispiste.repositories;
 
 import com.epul.permispiste.domains.InscriptionEntity;
-import com.epul.permispiste.domains.UtilisateurEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

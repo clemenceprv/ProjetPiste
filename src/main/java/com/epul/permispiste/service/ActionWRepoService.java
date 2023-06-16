@@ -16,7 +16,7 @@ public class ActionWRepoService {
     }
 
     public ActionEntity getActionById(int id) {
-        return actionRepository.findById(id);
+        return actionRepository.findActionEntityById(id);
     }
 
 }

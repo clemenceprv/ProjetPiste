@@ -10,10 +10,10 @@ public class MissionObjectifEntity {
     @Column(name = "id")
     private long id;
     @Basic
-    @Column(name = "fk_mission", insertable = false, updatable = false)
+    @Column(name = "fk_mission")
     private Integer fkMission;
     @Basic
-    @Column(name = "fk_objectif", insertable = false, updatable = false)
+    @Column(name = "fk_objectif")
     private Integer fkObjectif;
 
     public long getId() {

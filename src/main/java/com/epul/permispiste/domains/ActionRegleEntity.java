@@ -10,10 +10,10 @@ public class ActionRegleEntity {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "fk_action")
+    @Column(name = "fk_action", insertable = false, updatable = false)
     private Integer fkAction;
     @Basic
-    @Column(name = "fk_regle")
+    @Column(name = "fk_regle", insertable = false, updatable = false)
     private Integer fkRegle;
 
     public int getId() {

@@ -13,12 +13,8 @@ public class JeuEntity {
     @Basic
     @Column(name = "libellejeu")
     private String libellejeu;
-    @Basic
-    @Column(name = "fk_action")
-    private int fkAction;
-    @ManyToOne
-    @JoinColumn(name = "fk_action", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private ActionEntity actionByFkAction;
+    @OneToMany(mappedBy = "jeuByFkJeu")
+    private Collection<ActionJeuEntity> actionJeusById;
     @OneToMany(mappedBy = "jeuByFkJeu")
     private Collection<UtilisateurJeuEntity> utilisateurJeusById;
 
@@ -38,14 +34,6 @@ public class JeuEntity {
         this.libellejeu = libellejeu;
     }
 
-    public int getFkAction() {
-        return fkAction;
-    }
-
-    public void setFkAction(int fkAction) {
-        this.fkAction = fkAction;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,7 +42,6 @@ public class JeuEntity {
         JeuEntity jeuEntity = (JeuEntity) o;
 
         if (id != jeuEntity.id) return false;
-        if (fkAction != jeuEntity.fkAction) return false;
         if (libellejeu != null ? !libellejeu.equals(jeuEntity.libellejeu) : jeuEntity.libellejeu != null) return false;
 
         return true;
@@ -64,16 +51,15 @@ public class JeuEntity {
     public int hashCode() {
         int result = id;
         result = 31 * result + (libellejeu != null ? libellejeu.hashCode() : 0);
-        result = 31 * result + fkAction;
         return result;
     }
 
-    public ActionEntity getActionByFkAction() {
-        return actionByFkAction;
+    public Collection<ActionJeuEntity> getActionJeusById() {
+        return actionJeusById;
     }
 
-    public void setActionByFkAction(ActionEntity actionByFkAction) {
-        this.actionByFkAction = actionByFkAction;
+    public void setActionJeusById(Collection<ActionJeuEntity> actionJeusById) {
+        this.actionJeusById = actionJeusById;
     }
 
     public Collection<UtilisateurJeuEntity> getUtilisateurJeusById() {

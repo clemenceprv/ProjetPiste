@@ -10,10 +10,10 @@ public class ActionObjectifEntity {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "fk_action")
+    @Column(name = "fk_action", insertable = false, updatable = false)
     private Integer fkAction;
     @Basic
-    @Column(name = "fk_objectif")
+    @Column(name = "fk_objectif", insertable = false, updatable = false)
     private Integer fkObjectif;
 
     public int getId() {

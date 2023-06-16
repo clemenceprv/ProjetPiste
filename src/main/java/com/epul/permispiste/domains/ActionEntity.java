@@ -11,7 +11,7 @@ public class ActionEntity {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "fk_action")
+    @Column(name = "fk_action", insertable = false, updatable = false)
     private Integer fkAction;
     @Basic
     @Column(name = "wording")
@@ -20,18 +20,18 @@ public class ActionEntity {
     @Column(name = "score_minimum")
     private Integer scoreMinimum;
     @ManyToOne
-    @JoinColumn(name = "fk_action", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "fk_action", referencedColumnName = "id")
     private ActionEntity actionByFkAction;
     @OneToMany(mappedBy = "actionByFkAction")
     private Collection<ActionEntity> actionsById;
+    @OneToMany(mappedBy = "actionByFkAction")
+    private Collection<ActionJeuEntity> actionJeusById;
     @OneToMany(mappedBy = "actionByFkAction")
     private Collection<ActionMissionEntity> actionMissionsById;
     @OneToMany(mappedBy = "actionByFkAction")
     private Collection<IndicatorEntity> indicatorsById;
     @OneToMany(mappedBy = "actionByFkAction")
     private Collection<InscriptionActionEntity> inscriptionActionsById;
-    @OneToMany(mappedBy = "actionByFkAction")
-    private Collection<JeuEntity> jeusById;
 
     public int getId() {
         return id;
@@ -105,6 +105,14 @@ public class ActionEntity {
         this.actionsById = actionsById;
     }
 
+    public Collection<ActionJeuEntity> getActionJeusById() {
+        return actionJeusById;
+    }
+
+    public void setActionJeusById(Collection<ActionJeuEntity> actionJeusById) {
+        this.actionJeusById = actionJeusById;
+    }
+
     public Collection<ActionMissionEntity> getActionMissionsById() {
         return actionMissionsById;
     }
@@ -127,13 +135,5 @@ public class ActionEntity {
 
     public void setInscriptionActionsById(Collection<InscriptionActionEntity> inscriptionActionsById) {
         this.inscriptionActionsById = inscriptionActionsById;
-    }
-
-    public Collection<JeuEntity> getJeusById() {
-        return jeusById;
-    }
-
-    public void setJeusById(Collection<JeuEntity> jeusById) {
-        this.jeusById = jeusById;
     }
 }

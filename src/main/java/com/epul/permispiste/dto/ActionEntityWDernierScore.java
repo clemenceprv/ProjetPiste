@@ -1,35 +1,65 @@
 package com.epul.permispiste.dto;
 
-import com.epul.permispiste.domains.ActionEntity;
-import org.hibernate.action.internal.EntityAction;
-
 public class ActionEntityWDernierScore {
+    // Données extraites de la table action
+    private int idAction;
+    private String libelleAction;
 
-    private ActionEntity actionEntity;
-    private String dernierScore;
+    private String precedenteAction;
 
-    public ActionEntityWDernierScore(ActionEntity actionEntity, int score) {
-        this.actionEntity = actionEntity;
-        if (score == -1) {
-            this.dernierScore = "Pas de score";
-        } else {
-            this.dernierScore = String.valueOf(score);
-        }
+    private int scoreMinimum;
+
+    // Données extraites de la table inscription_action
+    private int fk_inscription;
+    private int score;
+
+    // Etat de l'action = true si nous pouvons la faire, false sinon
+    private boolean etat;
+
+    public ActionEntityWDernierScore(int idAction, String libelleAction,String precedenteAction,  int scoreMinimum, int fk_inscription, int score, boolean etat) {
+        this.idAction = idAction;
+        this.libelleAction = libelleAction;
+        this.precedenteAction = precedenteAction;
+        this.scoreMinimum = scoreMinimum;
+        this.fk_inscription = fk_inscription;
+        this.score = score;
+        this.etat = etat;
     }
 
-    public ActionEntity getActionEntity() {
-        return actionEntity;
+    public int getIdAction() {
+        return idAction;
     }
 
-    public void setActionEntity(ActionEntity actionEntity) {
-        this.actionEntity = actionEntity;
+    public String getLibelleAction() {
+        return libelleAction;
     }
 
-    public String getDernierScore() {
-        return dernierScore;
+    public int getScoreMinimum() {
+        return scoreMinimum;
     }
 
-    public void setDernierScore(String dernierScore) {
-        this.dernierScore = dernierScore;
+    public int getFk_inscription() {
+        return fk_inscription;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public boolean isEtat() {
+        return etat;
+    }
+
+    public void setEtat(boolean etat) {
+        this.etat = etat;
+    }
+
+    public String getPrecedenteAction() {
+        return precedenteAction;
+    }
+
+    public void setPrecedenteAction(String precedenteAction) {
+        this.precedenteAction = precedenteAction;
     }
 }
+

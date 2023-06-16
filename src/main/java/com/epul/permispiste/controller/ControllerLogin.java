@@ -1,11 +1,9 @@
 package com.epul.permispiste.controller;
 
-import com.epul.permispiste.domains.UtilisateurEntity;
 import com.epul.permispiste.service.AuthentificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -40,35 +38,35 @@ public class ControllerLogin {
     //// Contrôle Login
     ///
     ////
-    @RequestMapping(method = RequestMethod.POST, value = "/getLogin")
-    public RedirectView controleLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String destinationPage;
-        UtilisateurEntity unUtilisateur= new UtilisateurEntity();
-        HttpSession session;
-        try {
-            String login = request.getParameter("login");
-            String pwd = request.getParameter("password");
-            unUtilisateur.setNomUtil(login);
-            unUtilisateur.setMotPasse(pwd);
-            String message = "";
-
-            unUtilisateur = unAuthenService.authentification(unUtilisateur);
-            if (unUtilisateur != null) {
-                session = request.getSession();
-                session.setAttribute("id", unUtilisateur.getNumUtil());
-                destinationPage = "/index";
-            } else {
-                message = "mot de passe erroné";
-                request.setAttribute("message", message);
-                destinationPage = "/vues/connection/login";
-            }
-        }catch (Exception e) {
-            request.setAttribute("MesErreurs", e.getMessage());
-            destinationPage = "/vues/Erreur";
-        }
-
-        return new RedirectView(destinationPage);
-    }
+//    @RequestMapping(method = RequestMethod.POST, value = "/getLogin")
+//    public RedirectView controleLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//        String destinationPage;
+//        UtilisateurEntity unUtilisateur= new UtilisateurEntity();
+//        HttpSession session;
+//        try {
+//            String login = request.getParameter("login");
+//            String pwd = request.getParameter("password");
+//            unUtilisateur.setNomUtil(login);
+//            unUtilisateur.setMotPasse(pwd);
+//            String message = "";
+//
+//            unUtilisateur = unAuthenService.authentification(unUtilisateur);
+//            if (unUtilisateur != null) {
+//                session = request.getSession();
+//                session.setAttribute("id", unUtilisateur.getNumUtil());
+//                destinationPage = "/index";
+//            } else {
+//                message = "mot de passe erroné";
+//                request.setAttribute("message", message);
+//                destinationPage = "/vues/connection/login";
+//            }
+//        }catch (Exception e) {
+//            request.setAttribute("MesErreurs", e.getMessage());
+//            destinationPage = "/vues/Erreur";
+//        }
+//
+//        return new RedirectView(destinationPage);
+//    }
 
 }
 

@@ -17,7 +17,7 @@ public class ActionApprenantEntity {
     @Column(name = "fk_apprenant", insertable = false, updatable = false)
     private Integer fkApprenant;
     @Basic
-    @Column(name = "fk_calendrier", insertable = false, updatable = false)
+    @Column(name = "fk_calendrier")
     private Date fkCalendrier;
 
     public int getId() {

@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface UtilisateurRepository extends JpaRepository<UtilisateurEntity, Integer> {
 
     public UtilisateurEntity getFirstByNomUtil(String nom);
+    public UtilisateurEntity findByNumUtil(int numUtil);
 }
 
