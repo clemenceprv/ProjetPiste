@@ -1,56 +1,33 @@
 <%--
   Created by IntelliJ IDEA.
-  User: etulyon1
-  Date: 13/04/2023
-  Time: 08:40
+  User: christian
+  Date: 06/04/2018
+  Time: 14:11
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+
+
 <%@include file="../header.jsp" %>
 
-<html>
-<head>
-    <title>Ajouter un apprenant</title>
-</head>
 <body>
 <%@include file="../navigation.jsp" %>
-<div class="container">
-    <div class="row mt-4">
-        <div class="col">
-            <h1>Ajouter un apprenant :</h1>
-        </div>
+<h1>Ajouter une action</h1>
+<form method="post" action="/apprenant/add">
+    <div class="form-group">
+        <label for="libelle">Libellé</label>
+        <input type="text" class="form-control" id="libelle" name="libelle">
     </div>
-
-    <div class="card">
-        <div class="card-body">
-            <form method="post" action="<c:url value="/inserterApprenant.htm" />">
-
-                <div class="col-sm-12 col-lg-7">
-                    <div class="form-group">
-                        <label class="control-label">Nom de famille *</label>
-                        <input type="text" name="surname" value="" id="surname" class="form-control" placeholder="Votre nom" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label">Prénom *</label>
-                        <input type="text" name="forname" value="" id="forname" class="form-control" placeholder="Votre prénom" required>
-                    </div>
-                </div>
-
-                <nav class="d-flex justify-content-end" aria-label="...">
-                    <a href="<c:url value="/listeApprenant.htm" />" class="btn btn-secondary mr-2">
-                        Annuler
-                    </a>
-                    <button type="submit" class="btn btn-primary pull-right">
-                        Ajouter
-                    </button>
-                </nav>
-
-            </form>
-        </div>
+    <div class="form-group">
+        <label for="scoreMin">Score minimum</label>
+        <input type="number" class="form-control" id="scoreMin" name="scoreMin">
     </div>
-</div>
-<%@include file="../footer.jsp"%>
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+</form>
+
+
 </body>
 </html>
-</html>
+
+

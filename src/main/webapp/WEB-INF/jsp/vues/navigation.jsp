@@ -25,8 +25,8 @@
             <li>
                 <a class="nav-item nav-link " href="/">Accueil</a>
             </li>
-            <li><a class="nav-item nav-link" href="#">Missions</a></li>
-            <li><a class="nav-item nav-link" href="#">Apprenants</a></li>
+            <li><a class="nav-item nav-link" href="/mission/index">Missions</a></li>
+            <li><a class="nav-item nav-link" href="/apprenant/index">Apprenants</a></li>
             <li><a class="nav-item nav-link " href="#">Jeux</a></li>
             <li><a class="nav-item nav-link " href="/action/getAll">Actions</a></li>
             <li><a class="nav-item nav-link " href="/login/deconnection">Deconnection</a></li>

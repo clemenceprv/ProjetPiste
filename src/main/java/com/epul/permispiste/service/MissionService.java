@@ -1,33 +1,36 @@
 package com.epul.permispiste.service;
 
+import com.epul.permispiste.domains.ActionEntity;
 import com.epul.permispiste.domains.MissionEntity;
 import com.epul.permispiste.mesExceptions.MonException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.epul.permispiste.repositories.MissionRepository;
+
 
 import java.util.Collection;
 import java.util.List;
 
+
 @Service
 public class MissionService implements IMissionService {
+
+    @Autowired
+    private MissionRepository missionRepository;
 
     //  ***************************************
     //  On récupère la liste des missions
     //  ***************************************
-    public List<MissionEntity> getAll() throws MonException {
-        List<MissionEntity> missions;
-        String request = "SELECT m FROM MissionEntity m";
-
+    public List<MissionEntity> getAll(){
+        List<MissionEntity> missions=null;
         try {
-            Session session = ServiceHibernate.currentSession();
-            missions = session.createQuery(request, MissionEntity.class).getResultList();
-            session.close();
-        } catch (Exception e) {
-            throw new MonException("Impossible d'accéder à la SessionFactory: ", e.getMessage());
+            missions = missionRepository.findAll();
+        }catch (Exception e) {
+            System.out.println(e);
         }
-
         return missions;
     }
 

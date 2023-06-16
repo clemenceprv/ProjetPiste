@@ -1,6 +1,8 @@
 package com.epul.permispiste.controller;
 import com.epul.permispiste.domains.MissionEntity;
+import com.epul.permispiste.service.ActionService;
 import com.epul.permispiste.service.MissionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -12,12 +14,15 @@ import javax.servlet.http.HttpServletRequest;
 @CrossOrigin
 public class ControllerMission {
 
-    @GetMapping(value = "index_mission.htm")
+    @Autowired
+    private MissionService missionService;
+
+    @RequestMapping(value = "/index")
     public ModelAndView index(HttpServletRequest request) throws Exception {
         String destinationPage;
         try {
-            request.setAttribute("missions", new MissionService().getAll());
-            destinationPage = "mission/index";
+            request.setAttribute("missions", missionService.getAll());
+            destinationPage = "/vues/mission/afficherMissions";
         } catch (Exception e) {
             request.setAttribute("errors", e.getMessage());
             destinationPage = "layouts/error";
@@ -32,25 +37,7 @@ public class ControllerMission {
     public ModelAndView create(HttpServletRequest request) throws Exception {
         String destinationPage;
         try {
-            //request.setAttribute("jeux", new JeuService().getAll());
-            destinationPage = "mission/create";
-        } catch (Exception e) {
-            request.setAttribute("errors", e.getMessage());
-            destinationPage = "layouts/error";
-        }
-
-        return new ModelAndView(destinationPage);
-    }
-
-    @PostMapping(value = "save_mission.htm")
-    public ModelAndView store(HttpServletRequest request) throws Exception {
-        String destinationPage = "";
-        try {
-            MissionEntity mission = new MissionEntity();
-            //mission.setJeuByNumjeu(new JeuService().getJeuById(request.getParameter("id")));
-            //mission.setLibmission(request.getParameter("wording"));
-            new MissionService().insert(mission);
-            destinationPage = "redirect: index_mission.htm";
+            destinationPage = "/vues/mission/ajouterMissions";
         } catch (Exception e) {
             request.setAttribute("errors", e.getMessage());
             destinationPage = "layouts/error";
@@ -64,8 +51,7 @@ public class ControllerMission {
         String destinationPage;
         try {
             request.setAttribute("mission", new MissionService().getMissionById(Integer.parseInt(request.getParameter("id"))));
-            //request.setAttribute("jeux", new JeuService().getAll());
-            destinationPage = "mission/edit";
+            destinationPage = "/vues/mission/modifierMissions";
         } catch (Exception e) {
             request.setAttribute("errors", e.getMessage());
             destinationPage = "layouts/error";

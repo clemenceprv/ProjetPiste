@@ -4,6 +4,8 @@ package com.epul.permispiste.controller;
 import com.epul.permispiste.domains.ApprenantEntity;
 import com.epul.permispiste.mesExceptions.MonException;
 import com.epul.permispiste.service.ApprenantService;
+import com.epul.permispiste.service.MissionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,13 +20,29 @@ import javax.servlet.http.HttpServletResponse;
 @CrossOrigin
 public class ControllerApprenant {
 
-    @RequestMapping(value = "listeApprenant.htm")
+    @Autowired
+    private ApprenantService apprenantService;
+
+    @RequestMapping(value = "/index")
+    public ModelAndView index(HttpServletRequest request) throws Exception {
+        String destinationPage;
+        try {
+            request.setAttribute("apprenant", apprenantService.getAll());
+            destinationPage = "/vues/apprenant/afficherApprenants";
+        } catch (Exception e) {
+            request.setAttribute("errors", e.getMessage());
+            destinationPage = "layouts/error";
+        }
+        return new ModelAndView(destinationPage);
+    }
+
+    @RequestMapping(value = "/listeApprenant")
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String destinationPage;
         try {
             ApprenantService serviceApprenant = new ApprenantService();
             request.setAttribute("apprenants", serviceApprenant.consulterListeApprenants());
-            destinationPage = "apprenant/index";
+            destinationPage = "/vues/apprenant/afficherApprenants";
         } catch (Exception e) {
             request.setAttribute("errors", e.getMessage());
             destinationPage = "layouts/error";
@@ -37,7 +55,7 @@ public class ControllerApprenant {
         String destinationPage;
         try {
             request.setAttribute("apprenants", new ApprenantService().searchListeApprenants(request.getParameter("search")));
-            destinationPage = "apprenant/index";
+            destinationPage = "/vues/apprenant/index";
         } catch (Exception e) {
             request.setAttribute("errors", e.getMessage());
             destinationPage = "layouts/error";
