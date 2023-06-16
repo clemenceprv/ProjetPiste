@@ -21,9 +21,6 @@ public class MissionService implements IMissionService {
     @Autowired
     private MissionRepository missionRepository;
 
-    //  ***************************************
-    //  On récupère la liste des missions
-    //  ***************************************
     public List<MissionEntity> getAll(){
         List<MissionEntity> missions=null;
         try {
@@ -34,100 +31,24 @@ public class MissionService implements IMissionService {
         return missions;
     }
 
-    //  ***************************************
-    //  Obtention d'une mission par son id
-    //  ***************************************
+    public void editMission(MissionEntity missionEntity) {
+        MissionEntity mission = missionRepository.findById(missionEntity.getId()).get();
+        mission.setWording(missionEntity.getWording());
+        missionRepository.save(mission);
+    }
+
+    @Override
+    public void addMission(MissionEntity missionEntity)  {
+        missionRepository.save(missionEntity);
+    }
+
+    @Override
     public MissionEntity getMissionById(int id) {
-        MissionEntity missions;
-        String request = "SELECT m FROM MissionEntity m WHERE m.id=" + id;
-        try {
-            Session session = ServiceHibernate.currentSession();
-            missions = (MissionEntity) session.createQuery(request).getResultList().get(0);
-            session.close();
-        } catch (Exception e) {
-            throw new MonException("Récupération de la mission impossible: ", e.getMessage());
-        }
-
-        return missions;
+        return missionRepository.findById(id).get();
     }
 
-    //  ***************************************
-    //  Ajout d'une mission
-    //  ***************************************
-    public void insert(MissionEntity missionEntity) {
-        Transaction tx;
-        try {
-            Session session = ServiceHibernate.currentSession();
-            tx = session.beginTransaction();
-            session.save(missionEntity);
-            tx.commit();
-            session.close();
-        } catch (Exception e) {
-            throw new MonException("Insertion de la mission impossible : ", e.getMessage());
-        }
-    }
-
-    //  ***************************************
-    //  Suppression d'une mission
-    //  ***************************************
-    public void delete(MissionEntity missionEntity) {
-        Transaction tx;
-        try {
-            Session session = ServiceHibernate.currentSession();
-            tx = session.beginTransaction();
-            session.delete(missionEntity);
-            tx.commit();
-            session.close();
-        } catch (Exception e) {
-            throw new MonException("Insertion de la mission impossible : ", e.getMessage());
-        }
-    }
-
-    //  ***************************************
-    //  Mise à jours d'une mission
-    //  ***************************************
-    public void update(MissionEntity missionEntity) {
-        Transaction tx;
-        try {
-            Session session = ServiceHibernate.currentSession();
-            tx = session.beginTransaction();
-            session.merge(missionEntity);
-            tx.commit();
-            session.close();
-        } catch (Exception e) {
-            throw new MonException("Insertion de la mission impossible : ", e.getMessage());
-        }
-    }
-
-    //  ***************************************
-    //  Ajouter une action à une mission
-    //  ***************************************
-    public void addActionToMission(int idMission, int idAction) {
-        Transaction tx;
-        try {
-            Session session = ServiceHibernate.currentSession();
-            tx = session.beginTransaction();
-            session.createNativeQuery("INSERT INTO mission_action (idmission, idaction) VALUES (" + idMission + ", " + idAction + ")").executeUpdate();
-            tx.commit();
-            session.close();
-        } catch (Exception e) {
-            throw new MonException("Insertion de l'action impossible : ", e.getMessage());
-        }
-    }
-
-    //  ***************************************
-    //  Supprimer une action d'une mission
-    //  ***************************************
-    public void removeActionFromMission(int idMission, int idAction) {
-        Transaction tx;
-        try {
-            Session session = ServiceHibernate.currentSession();
-            tx = session.beginTransaction();
-            session.createNativeQuery("DELETE FROM mission_action WHERE idmission=" + idMission + " AND idaction=" + idAction).executeUpdate();
-            tx.commit();
-            session.close();
-        } catch (Exception e) {
-            throw new MonException("Suppression de l'action impossible : ", e.getMessage());
-        }
+    public void delete(int id) {
+        MissionEntity mission = missionRepository.findById(id).get();
+        missionRepository.delete(mission);
     }
 }

@@ -19,14 +19,15 @@
         <label for="libelle">Libellé</label>
         <input type="text" class="form-control" id="libelle" name="libelle">
     </div>
-    <div class="form-group">
-        <label for="scoreMin">Score minimum</label>
-        <input type="number" class="form-control" id="scoreMin" name="scoreMin">
-    </div>
+    <p>Actions : </p>
+    <c:forEach items="${actions}" var="action">
+        <div>
+            <input type="checkbox" id=${action.id} name="actions">
+            <label for=${action.id}>${action.wording}</label>
+        </div>
+    </c:forEach>
     <button type="submit" class="btn btn-primary">Enregistrer</button>
 </form>
-
-
 </body>
 </html>
 

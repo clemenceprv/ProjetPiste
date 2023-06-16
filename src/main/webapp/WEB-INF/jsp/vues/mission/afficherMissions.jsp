@@ -24,18 +24,16 @@
     <tr>
         <th scope="col">Id</th>
         <th scope="col">Libellé</th>
-        <th scope="col">Score minimum</th>
         <th scope="col">Modifier</th>
         <th scope="col">Supprimer</th>
     </tr>
     </thead>
     <tbody>
 
-    <c:forEach items="${actions}" var="mission">
+    <c:forEach items="${missions}" var="mission">
         <tr>
             <th>${mission.id}</th>
             <td>${mission.wording}</td>
-            <td>${mission.scoreMinimum}</td>
             <td><a class="btn btn-secondary" href="/mission/editForm/${mission.id}" role="button">Modifier</a></td>
             <td><a class="btn btn-danger" href="/mission/delete/${mission.id}" role="button">Supprimer</a></td>
         </tr>

@@ -16,17 +16,15 @@
 <h1>Ajouter une action</h1>
 <form method="post" action="/apprenant/add">
     <div class="form-group">
-        <label for="libelle">Libellé</label>
-        <input type="text" class="form-control" id="libelle" name="libelle">
+        <label for="nom">Nom</label>
+        <input type="text" class="form-control" id="nom" name="nom">
     </div>
     <div class="form-group">
-        <label for="scoreMin">Score minimum</label>
-        <input type="number" class="form-control" id="scoreMin" name="scoreMin">
+        <label for="prenom">Prenom</label>
+        <input type="text" class="form-control" id="prenom" name="prenom">
     </div>
     <button type="submit" class="btn btn-primary">Enregistrer</button>
 </form>
-
-
 </body>
 </html>
 

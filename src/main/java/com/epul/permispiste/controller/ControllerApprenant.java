@@ -2,18 +2,14 @@ package com.epul.permispiste.controller;
 
 
 import com.epul.permispiste.domains.ApprenantEntity;
-import com.epul.permispiste.mesExceptions.MonException;
 import com.epul.permispiste.service.ApprenantService;
-import com.epul.permispiste.service.MissionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @RequestMapping("/apprenant")
 @RestController
@@ -22,6 +18,8 @@ public class ControllerApprenant {
 
     @Autowired
     private ApprenantService apprenantService;
+
+    private HttpSession session;
 
     @RequestMapping(value = "/index")
     public ModelAndView index(HttpServletRequest request) throws Exception {
@@ -36,115 +34,134 @@ public class ControllerApprenant {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "/listeApprenant")
-    public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @RequestMapping("/addForm")
+    public ModelAndView addForm(HttpServletRequest request) {
         String destinationPage;
         try {
-            ApprenantService serviceApprenant = new ApprenantService();
-            request.setAttribute("apprenants", serviceApprenant.consulterListeApprenants());
-            destinationPage = "/vues/apprenant/afficherApprenants";
+            session = request.getSession();
+            if (session.getAttribute("id") == null) {
+                String message = "Vous n'êtes pas connecté !!";
+                request.setAttribute("message", message);
+                destinationPage = "vues/connection/login";
+            }
+            else
+            {
+                destinationPage = "/vues/apprenant/ajouterApprenant";
+            }
         } catch (Exception e) {
-            request.setAttribute("errors", e.getMessage());
-            destinationPage = "layouts/error";
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "/vues/Erreur";
         }
+
+        // Redirection vers la page jsp appropriee
         return new ModelAndView(destinationPage);
     }
 
-    @GetMapping(value = "searchlisteApprenant.htm")
-    public ModelAndView search(HttpServletRequest request) throws Exception {
+    @RequestMapping(method = RequestMethod.POST, value ="/add")
+    public ModelAndView add(HttpServletRequest request, HttpServletResponse response ) {
         String destinationPage;
         try {
-            request.setAttribute("apprenants", new ApprenantService().searchListeApprenants(request.getParameter("search")));
-            destinationPage = "/vues/apprenant/index";
+            session = request.getSession();
+            if (session.getAttribute("id") == null) {
+                String message = "Vous n'êtes pas connecté !!";
+                request.setAttribute("message", message);
+                destinationPage = "vues/connection/login";
+            }
+            else
+            {
+                ApprenantEntity apprenantEntity = new ApprenantEntity();
+                String nom = request.getParameter("nom");
+                String prenom = request.getParameter("prenom");
+                apprenantEntity.setNomApprenant(nom);
+                apprenantEntity.setPrenomApprenant(prenom);
+                apprenantService.addApprenant(apprenantEntity);
+                request.setAttribute("apprenants", apprenantService.getAll());
+                destinationPage = "/vues/apprenant/afficherApprenants";
+            }
         } catch (Exception e) {
-            request.setAttribute("errors", e.getMessage());
-            destinationPage = "layouts/error";
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "/vues/Erreur";
         }
+
+        // Redirection vers la page jsp appropriee
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "ajouterApprenant.htm")
-    public ModelAndView ajouterApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @RequestMapping(method = RequestMethod.GET, value ="/editForm/{id}")
+    public ModelAndView edit(HttpServletRequest request, @PathVariable(value = "id") int id ) {
         String destinationPage;
         try {
-            destinationPage = "apprenant/ajouterApprenant";
-        } catch (MonException e) {
-            request.setAttribute("MesErreurs", e.getMessage());
-            destinationPage = "Erreur";
+            session = request.getSession();
+            if (session.getAttribute("id") == null) {
+                String message = "Vous n'êtes pas connecté !!";
+                request.setAttribute("message", message);
+                destinationPage = "vues/apprenant/login";
+            }
+            else
+            {
+                ApprenantEntity apprenantEntity = apprenantService.getApprenantById(id);
+                request.setAttribute("apprenant", apprenantEntity);
+                destinationPage = "/vues/apprenant/editApprenants";
+            }
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
-            destinationPage = "layouts/Erreur";
+            destinationPage = "/vues/Erreur";
         }
+
+        // Redirection vers la page jsp appropriee
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "inserterApprenant.htm")
-    public ModelAndView inserterApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String destinationPage = "";
+    @RequestMapping(method = RequestMethod.POST, value ="/edit")
+    public ModelAndView edit(HttpServletRequest request, HttpServletResponse response ) {
+        String destinationPage;
         try {
-            ApprenantService serviceApprenant = new ApprenantService();
-            ApprenantEntity apprenant = new ApprenantEntity();
-            apprenant.setNomApprenant(request.getParameter("surname"));
-            apprenant.setPrenomApprenant(request.getParameter("forname"));
-
-            serviceApprenant.insertApprenant(apprenant);
-            destinationPage = "redirect: listeApprenant.htm";
+            session = request.getSession();
+            if (session.getAttribute("id") == null) {
+                String message = "Vous n'êtes pas connecté !!";
+                request.setAttribute("message", message);
+                destinationPage = "vues/connection/login";
+            }
+            else
+            {
+                int id = Integer.parseInt(request.getParameter("id"));
+                ApprenantEntity apprenantEntity = new ApprenantEntity();
+                apprenantEntity.setId(id);
+                apprenantService.editApprenant(apprenantEntity);
+                request.setAttribute("actions", apprenantService.getAll());
+                destinationPage = "/vues/apprenant/afficherApprenants";
+            }
         } catch (Exception e) {
-            e.printStackTrace();
             request.setAttribute("MesErreurs", e.getMessage());
-            destinationPage = "layouts/Erreur";
+            destinationPage = "/vues/Erreur";
         }
 
+        // Redirection vers la page jsp appropriee
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "supprimerApprenant.htm")
-    public ModelAndView supprimerApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @RequestMapping(method = RequestMethod.GET, value ="/delete/{id}")
+    public ModelAndView delete(HttpServletRequest request, @PathVariable(value = "id") int id ) {
         String destinationPage;
         try {
-            ApprenantService serviceApprenant = new ApprenantService();
-            ApprenantEntity apprenant = serviceApprenant.adherentById(Integer.parseInt(request.getParameter("id")));
-            serviceApprenant.deleteApprenant(apprenant);
-            destinationPage = "redirect: listeApprenant.htm";
+            session = request.getSession();
+            if (session.getAttribute("id") == null) {
+                String message = "Vous n'êtes pas connecté !!";
+                request.setAttribute("message", message);
+                destinationPage = "vues/connection/login";
+            }
+            else
+            {
+                apprenantService.delete(id);
+                request.setAttribute("apprenants", apprenantService.getAll());
+                destinationPage = "/vues/apprenant/afficherApprenants";
+            }
         } catch (Exception e) {
-            e.printStackTrace();
             request.setAttribute("MesErreurs", e.getMessage());
-            destinationPage = "layouts/Erreur";
+            destinationPage = "/vues/Erreur";
         }
-        return new ModelAndView(destinationPage);
-    }
 
-    @RequestMapping(value = "pageModifierApprenant.htm")
-    public ModelAndView pageModifierApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String destinationPage;
-        try {
-            ApprenantService serviceApprenant = new ApprenantService();
-            request.setAttribute("apprenant", serviceApprenant.adherentById(Integer.parseInt(request.getParameter("id"))));
-            destinationPage = "apprenant/modifierApprenant";
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("MesErreurs", e.getMessage());
-            destinationPage = "layouts/Erreur";
-        }
-        return new ModelAndView(destinationPage);
-    }
-
-    @RequestMapping(value = "modifierApprenant.htm")
-    public ModelAndView modifierApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String destinationPage;
-        try {
-            ApprenantService serviceApprenant = new ApprenantService();
-            ApprenantEntity apprenant = serviceApprenant.adherentById(Integer.parseInt(request.getParameter("id")));
-            apprenant.setNomApprenant(request.getParameter("surname"));
-            apprenant.setPrenomApprenant(request.getParameter("forname"));
-            serviceApprenant.update(apprenant);
-
-            destinationPage = "redirect: listeApprenant.htm";
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("MesErreurs", e.getMessage());
-            destinationPage = "layouts/Erreur";
-        }
+        // Redirection vers la page jsp appropriee
         return new ModelAndView(destinationPage);
     }
 }

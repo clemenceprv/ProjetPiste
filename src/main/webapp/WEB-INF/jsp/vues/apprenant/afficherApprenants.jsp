@@ -23,19 +23,17 @@
     <thead>
     <tr>
         <th scope="col">Id</th>
-        <th scope="col">Libellé</th>
-        <th scope="col">Score minimum</th>
-        <th scope="col">Modifier</th>
-        <th scope="col">Supprimer</th>
+        <th scope="col">Nom</th>
+        <th scope="col">Prenom</th>
     </tr>
     </thead>
     <tbody>
 
-    <c:forEach items="${apprenant}" var="apprenant">
+    <c:forEach items="${apprenants}" var="apprenant">
         <tr>
             <th>${apprenant.id}</th>
-            <td>${apprenant.wording}</td>
-            <td>${apprenant.scoreMinimum}</td>
+            <td>${apprenant.nom}</td>
+            <td>${apprenant.prenom}</td>
             <td><a class="btn btn-secondary" href="/apprenant/editForm/${apprenant.id}" role="button">Modifier</a></td>
             <td><a class="btn btn-danger" href="/apprenant/delete/${apprenant.id}" role="button">Supprimer</a></td>
         </tr>
