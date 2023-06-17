@@ -9,5 +9,8 @@ public interface UtilisateurRepository extends JpaRepository<UtilisateurEntity, 
 
     public UtilisateurEntity getFirstByNomUtil(String nom);
     public UtilisateurEntity findByNumUtil(int numUtil);
+
+    UtilisateurEntity findUtilisateurEntitiesByNumUtil(int idUser);
+
 }
 

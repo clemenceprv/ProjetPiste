@@ -9,6 +9,7 @@ public interface JeuRepository
         extends JpaRepository<JeuEntity, Integer> {
     public JeuEntity save(JeuEntity jeuEntity);
     public JeuEntity findJeuEntityById(int id);
+    public JeuEntity findById(int id);
 
 }
 

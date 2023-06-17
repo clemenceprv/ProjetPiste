@@ -22,4 +22,7 @@ public class UtilisateurService
     }
 
 
+    public UtilisateurEntity getUserByFkKey(int idUser) {
+        return utilisateurRepository.findUtilisateurEntitiesByNumUtil(idUser);
+    }
 }

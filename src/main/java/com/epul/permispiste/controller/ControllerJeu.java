@@ -5,7 +5,6 @@ import com.epul.permispiste.dto.ActionEntityWDernierScore;
 import com.epul.permispiste.dto.ActionWEntityWDernierScoreComparator;
 import com.epul.permispiste.dto.IndicatorsActions;
 import com.epul.permispiste.mesExceptions.MonException;
-import com.epul.permispiste.repositories.IndicateurRepository;
 import com.epul.permispiste.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/jeu")
 @RestController
@@ -43,6 +43,16 @@ public class ControllerJeu {
 
     @Autowired
     private IndicateurService indicateurService;
+
+
+
+    @Autowired
+    private UtilisateurService ServiceUtilisateur;
+    @Autowired
+    private UtilisateurJeuService unUtilisateurJeuService;
+
+    @Autowired
+    private ActionService unActionService;
 
     //  ***************************************
     //  On affiche la liste des apprenants recherchés
@@ -276,9 +286,50 @@ public class ControllerJeu {
     }
 
 
+    @RequestMapping(value = "listeJeuxRealise.htm")
+    public ModelAndView getJeuxRealise(HttpServletRequest request, HttpServletResponse response) throws Exception
+    {
+        System.out.println("arrivée liste jeu");
+        String destinationPage = "";
+        int idUser = Integer.parseInt(request.getParameter("idApprenant"));
+        System.out.println("Trouver jeu : " + jeuService.getAllJeu());
+
+        List<UtilisateurJeuEntity> listeJeuxPourUtilisateur = null;
+        UtilisateurEntity Utilisateurs = null;
+        List<JeuEntity> listeJeux;
+
+        try {
+            System.out.println("idUser: " + idUser);
+            listeJeuxPourUtilisateur = unUtilisateurJeuService.getInscriptionByUsers(idUser);
+            System.out.println("liste jeux : " + listeJeuxPourUtilisateur.get(0));
+
+            // Récupérer les informations des jeux associés
+            listeJeux = new ArrayList<>();
+            for (UtilisateurJeuEntity jeu : listeJeuxPourUtilisateur) {
+                //On récupère le jeu grâce à son id
+                JeuEntity jeuEntity = jeuService.getJeubyID(jeu.getFkJeu());
+                //On récupère les actions lié au jeu
+                listeJeux.add(jeuEntity);
+                Utilisateurs = ServiceUtilisateur.getUserByFkKey(idUser);
+            }
 
 
 
+            request.setAttribute("Utilisateur", Utilisateurs);
+            System.out.println("numéro"+ idUser);
+            request.setAttribute("listeJeux", listeJeux);
+            request.setAttribute("listeJeuxRealise", listeJeuxPourUtilisateur);
+            destinationPage = "vues/jeu/listeJeuxRealise";
+        } catch (MonException e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "/vues/Erreur";
+        }
+        return new ModelAndView(destinationPage);
+    }
 }
+
+
+
+
 
 

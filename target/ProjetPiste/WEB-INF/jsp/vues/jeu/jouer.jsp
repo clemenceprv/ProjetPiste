@@ -17,7 +17,7 @@
 <div class="container">
     <div class="col-md-8 col-sm-8">
         <div class="blanc">
-            <h2>Liste des Apprenants</h2>
+            <h2>Jeu lancé</h2>
             <form action="/jeu/validerJeu" method="post">
                 <input type="hidden" name="idApprenant" value="${idApprenant}" />
                 <input type="hidden" name="idJeu" value="${idJeu}" />
@@ -27,7 +27,7 @@
                     <c:forEach items="${actionIndicateurDTO.indicators}" var="indicateur">
                         <label for="choix${indicateur.id}">${indicateur.wording}</label><br>
                         <input type="checkbox" id="choix${indicateur.id}" name="checkboxesChecked"
-                               value="checkboxesChecked${indicateur.valueIfCheck}">
+                               value="${indicateur.valueIfCheck}">
                     </c:forEach>
                 </c:forEach>
 

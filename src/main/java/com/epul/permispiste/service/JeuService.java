@@ -19,8 +19,6 @@ public class JeuService{
     private JeuRepository jeuRepository;
     private ActionJeuRepository actionJeuRepository;
 
-    private ActionRepository actionRepository;
-
     private UtilisateurJeuRepository inscriptionjeuRepository;
 
     private UtilisateurRepository utilisateurRepository;
@@ -76,4 +74,11 @@ public class JeuService{
 
 
 
+    public JeuEntity getJeubyID(int id) {
+        return jeuRepository.findById(id);
+    }
+
+    public List<JeuEntity> getAllJeu() {
+        return jeuRepository.findAll();
+    }
 }

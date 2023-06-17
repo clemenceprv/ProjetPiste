@@ -11,16 +11,17 @@
     <title>List Action Apprenant</title>
 </head>
 <%@include file="../header.jsp" %>
-<body>
+<body class="text-center">
 <%@include file="../navigation.jsp" %>
+
 <H1> Affichage des Actions possibles pour ${utilisateur.surname} ${utilisateur.forename} </H1>
-<div class="container">
-    <div class="col-md-8 col-sm-8">
-        <div class="blanc">
+<div class="container text-center">
+    <div class="col-auto row justify-content-center">
+        <div class="blanc ">
             <br><br>
             <form action="/jeu/creerJeu" method="post">
                 <input type="hidden" name="idApprenant" value="${idApprenant}" />
-                <table class="table table-striped">
+                <table class="table table-striped mx-auto">
                     <thead>
                     <tr>
                         <td scope="col">#</td>
@@ -134,6 +135,7 @@
 
     // Ajouter un écouteur d'événement "input" au champ de saisie de texte
     inputText.addEventListener('input', verifierChampVide);
+
 
 </script>
 </html>

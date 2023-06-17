@@ -42,9 +42,7 @@ public class JeuEntity {
         JeuEntity jeuEntity = (JeuEntity) o;
 
         if (id != jeuEntity.id) return false;
-        if (libellejeu != null ? !libellejeu.equals(jeuEntity.libellejeu) : jeuEntity.libellejeu != null) return false;
-
-        return true;
+        return libellejeu != null ? libellejeu.equals(jeuEntity.libellejeu) : jeuEntity.libellejeu == null;
     }
 
     @Override
@@ -69,4 +67,7 @@ public class JeuEntity {
     public void setUtilisateurJeusById(Collection<UtilisateurJeuEntity> utilisateurJeusById) {
         this.utilisateurJeusById = utilisateurJeusById;
     }
+
+
+
 }
