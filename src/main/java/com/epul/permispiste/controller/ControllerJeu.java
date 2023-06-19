@@ -13,10 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RequestMapping("/jeu")
 @RestController
@@ -70,6 +67,29 @@ public class ControllerJeu {
         return new ModelAndView(destinationPage);
     }
 */
+    @GetMapping(value= "choixApprenant")
+    public ModelAndView selectionnerApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception
+    {
+        String destinationPage = "";
+        try {
+            List<UtilisateurEntity> listeApprenants = ServiceUtilisateur.getLearnerUsers();
+            System.out.println("BOdozejrfiofjpozegshmiofzhgrehgeiusgheruk");
+            System.out.println(listeApprenants);
+            request.setAttribute("listeApprenants", listeApprenants);
+            destinationPage = "vues/jeu/choixApprenants";
+        } catch (MonException e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "/vues/Erreur";
+        } catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "vues/Erreur";
+        }
+        return new ModelAndView(destinationPage);
+    }
+
+
+
+
     public List<ActionEntity> verifierDependances(ActionEntity action, InscriptionActionEntity inscription)
     {
         ArrayList<ActionEntity> actionsAAjouter = new ArrayList<>();
@@ -173,7 +193,7 @@ public class ControllerJeu {
 
             }
             Collections.sort(listeActionsWDernierScore, new ActionWEntityWDernierScoreComparator());
-            request.setAttribute("listeActions", listeActionsWDernierScore);
+            request.setAttribute("listeActions", listeActionsWDernierScore);;
             request.setAttribute("idApprenant", idApprenant);
             destinationPage = "vues/jeu/listeJeuxPossiblesApprenant";
         } catch (MonException e) {
@@ -251,37 +271,98 @@ public class ControllerJeu {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(value = "/validerJeu")
-    public void validerJeu(HttpServletRequest request, HttpServletResponse response) throws Exception
+    public ActionEntity verifyIfActionIsInList(LinkedHashMap listeActions, int idAction)
     {
-        String[] options = request.getParameterValues("checkboxesChecked");
-        int idJeu = Integer.parseInt(request.getParameter("idJeu"));
-        int idApprenant = Integer.parseInt(request.getParameter("idApprenant"));
-        List<ActionEntity> listeActions = actionJeuService.getActionsByJeu(idJeu);
-        List<IndicatorsActions> listeIndicateursActions = new ArrayList<>();
-
-        System.out.println("idJeu : "+idJeu);
-        System.out.println("idApprenant : "+idApprenant);
-        System.out.println("options : "+options);
-
-        for (ActionEntity action : listeActions)
-        {
-            List<IndicatorEntity> listeIndicateurs = indicateurService.findAllByFkAction(action.getId());
-            int score = 0;
-            for (IndicatorEntity indicateur : listeIndicateurs)
+        ActionEntity action = null;
+        Iterator it = listeActions.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            ActionEntity actionEntity = (ActionEntity) pair.getKey();
+            if(actionEntity.getId() == idAction)
             {
-//                String valeurIndicateur = request.getParameter("indicateur"+indicateur.getId());
-//                if(valeurIndicateur != null)
-//                {
-//                    IndicateurActionEntity indicateurAction = new IndicateurActionEntity();
-//                    indicateurAction.setFkAction(action.getId());
-//                    indicateurAction.setFkIndicateur(indicateur.getId());
-//                    indicateurAction.setFkInscription(idApprenant);
-//                    indicateurAction.setValeur(Integer.parseInt(valeurIndicateur));
-//                    indicateurActionService.addIndicateurAction(indicateurAction);
-//                }
+                action = actionEntity;
             }
         }
+        return action;
+    }
+
+    @RequestMapping(value = "/validerJeu")
+    public ModelAndView validerJeu(HttpServletRequest request, HttpServletResponse response) throws Exception
+    {
+        String destinationPage = "";
+        try
+        {
+            // Récupération des indicateurs sélectionnés
+            String[] options = request.getParameterValues("checkboxesChecked");
+            List<String> idIndicateursSelected = new ArrayList<String>(Arrays.asList(options));
+            System.out.println("idIndicateursSelected : "+idIndicateursSelected);
+
+            int idJeu = Integer.parseInt(request.getParameter("idJeu"));
+            int idApprenant = Integer.parseInt(request.getParameter("idApprenant"));
+
+            List<InscriptionEntity> listeInscriptions = inscriptionService.getInscriptionsByIdUsers(idApprenant);
+
+            List<ActionEntity> listeActions = actionJeuService.getActionsByJeu(idJeu);
+
+            LinkedHashMap<ActionEntity, Integer> actionsAAfficherScore = new LinkedHashMap();
+
+            System.out.println("idJeu : "+idJeu);
+            System.out.println("idApprenant : "+idApprenant);
+            System.out.println("options : "+options);
+
+            // Pour chaque inscription, on calcule le score et on le met à jour
+            for (InscriptionEntity inscription : listeInscriptions)
+            {
+                for (ActionEntity action : listeActions)
+                {
+                    int score;
+                    ActionEntity actionEntity = verifyIfActionIsInList(actionsAAfficherScore, action.getId());
+                    if (actionEntity == null)
+                    {
+                        List<IndicatorEntity> listeIndicateurs = indicateurService.findAllByFkAction(action.getId());
+                        score = 0;
+                        for (IndicatorEntity indicateur : listeIndicateurs)
+                        {
+                            if (idIndicateursSelected.contains(String.valueOf(indicateur.getId())))
+                            {
+                                score += indicateur.getValueIfCheck();
+                                System.out.println("J'ai trouvé l'indicateur : "+indicateur.getId()+" dans la liste des indicateurs cochés");
+                            }
+                            else
+                            {
+                                score += indicateur.getValueIfUnCheck();
+                                System.out.println("L'id de l'indicateur : "+indicateur.getId()+" n'est pas dans la liste des indicateurs cochés");
+                            }
+                        }
+                        actionsAAfficherScore.put(action, score);
+                    }
+                    else
+                    {
+                        score = actionsAAfficherScore.get(actionEntity);
+                    }
+                    System.out.println("action : "+action.getWording());
+                    System.out.println("score : "+score);
+                    inscriptionActionService.updateScore(inscription.getId(), action.getId(), score);
+                }
+            }
+            System.out.println("actionsAAfficherScore : "+actionsAAfficherScore);
+            // Faire afficher le score
+            request.setAttribute("actionsAAfficherScore", actionsAAfficherScore);
+            System.out.println("Taille de la liste des actions : "+actionsAAfficherScore.size());
+            request.setAttribute("idJeu", idJeu);
+            request.setAttribute("idApprenant", idApprenant);
+            destinationPage = "vues/jeu/afficherResultats";
+        }
+        catch (MonException e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "/vues/Erreur";
+        } catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "vues/Erreur";
+        }
+        return new ModelAndView(destinationPage);
+
+
 
     }
 

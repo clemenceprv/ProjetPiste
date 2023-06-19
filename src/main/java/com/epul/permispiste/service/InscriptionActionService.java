@@ -25,6 +25,14 @@ public class InscriptionActionService {
         return inscriptionActionRepository.findByFkActionAndFkInscription(idAction, idInscription);
     }
 
+    public void updateScore(int inscriptionId, int actionId, int score) {
+        InscriptionActionEntity inscriptionActionEntity = getInscriptionActionByIdAction(actionId, inscriptionId);
+        inscriptionActionEntity.setScore(score);
+        inscriptionActionRepository.save(inscriptionActionEntity);
+    }
+
+
+
 
 
 

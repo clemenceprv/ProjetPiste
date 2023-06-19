@@ -5,6 +5,8 @@ import com.epul.permispiste.repositories.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UtilisateurService
 {
@@ -24,5 +26,9 @@ public class UtilisateurService
 
     public UtilisateurEntity getUserByFkKey(int idUser) {
         return utilisateurRepository.findUtilisateurEntitiesByNumUtil(idUser);
+    }
+
+    public List<UtilisateurEntity> getLearnerUsers() {
+        return utilisateurRepository.findUtilisateurEntitiesByRole("learner");
     }
 }

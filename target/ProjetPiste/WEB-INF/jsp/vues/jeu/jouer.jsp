@@ -27,7 +27,7 @@
                     <c:forEach items="${actionIndicateurDTO.indicators}" var="indicateur">
                         <label for="choix${indicateur.id}">${indicateur.wording}</label><br>
                         <input type="checkbox" id="choix${indicateur.id}" name="checkboxesChecked"
-                               value="${indicateur.valueIfCheck}">
+                               value="${indicateur.id}">
                     </c:forEach>
                 </c:forEach>
 

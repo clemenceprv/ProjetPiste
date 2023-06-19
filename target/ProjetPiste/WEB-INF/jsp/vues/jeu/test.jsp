@@ -41,5 +41,6 @@
     </div>
     <div class="col-md-offset-2 col-md-7" id="resultat2">
 </div>
+</div>
 </body>
 </html>
