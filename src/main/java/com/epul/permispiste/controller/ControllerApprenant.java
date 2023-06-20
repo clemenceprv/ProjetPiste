@@ -1,6 +1,4 @@
 package com.epul.permispiste.controller;
-
-
 import com.epul.permispiste.domains.ApprenantEntity;
 import com.epul.permispiste.service.ApprenantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +26,8 @@ public class ControllerApprenant {
             request.setAttribute("apprenant", apprenantService.getAll());
             destinationPage = "/vues/apprenant/afficherApprenants";
         } catch (Exception e) {
-            request.setAttribute("errors", e.getMessage());
-            destinationPage = "layouts/error";
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "/vues/Erreur";
         }
         return new ModelAndView(destinationPage);
     }
@@ -95,7 +93,7 @@ public class ControllerApprenant {
             if (session.getAttribute("id") == null) {
                 String message = "Vous n'êtes pas connecté !!";
                 request.setAttribute("message", message);
-                destinationPage = "vues/apprenant/login";
+                destinationPage = "vues/connection/login";
             }
             else
             {
@@ -128,7 +126,7 @@ public class ControllerApprenant {
                 ApprenantEntity apprenantEntity = new ApprenantEntity();
                 apprenantEntity.setId(id);
                 apprenantService.editApprenant(apprenantEntity);
-                request.setAttribute("actions", apprenantService.getAll());
+                request.setAttribute("apprenants", apprenantService.getAll());
                 destinationPage = "/vues/apprenant/afficherApprenants";
             }
         } catch (Exception e) {
