@@ -9,18 +9,24 @@
 <html>
 <head>
   <title>List Action Apprenant</title>
+  <%@include file="../header.jsp" %>
+  <link href="/css/choixApprenants.css" rel="stylesheet">
 </head>
-<%@include file="../header.jsp" %>
+
 <body>
 <%@include file="../navigation.jsp" %>
 
-<div class="container">
+<div class="container d-flex justify-content-center align-items-center">
   <div class="col-md-8 col-sm-8">
     <div class="blanc">
-      <h1>Liste des appenants</h1>
+      <h1 class="text-center">Liste des apprenants</h1>
+      <div class="mt-5"></div>
       <c:forEach items="${listeApprenants}" var="apprenant">
-        <a href="/jeu/listeJeuxPossiblesApprenant.htm?idApprenant=${apprenant.numUtil}">${apprenant.surname} ${apprenant.forename}</a>
+        <div class="shadow p-3 mb-5 bg-body-tertiary rounded text-center hover-effect fs-5 w-75 mx-auto" onclick="location.href='/jeu/listeJeuxPossiblesApprenant.htm?idApprenant=${apprenant.numUtil}'">
+          <span class="text-secondary">${apprenant.surname} ${apprenant.forename}</span>
+        </div>
       </c:forEach>
+
     </div>
   </div>
 </div>
