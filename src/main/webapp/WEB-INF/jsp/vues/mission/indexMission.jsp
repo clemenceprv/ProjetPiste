@@ -19,11 +19,6 @@
     <div class="blanc ">
         <br><br>
         <table>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Inscription</th>
-            </tr>
             <c:forEach var="mission" items="${missions}">
                 <tr>
                     <td>${mission.id}</td>

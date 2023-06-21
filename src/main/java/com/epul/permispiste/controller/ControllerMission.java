@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -74,26 +75,38 @@ public class ControllerMission {
     public ModelAndView getlisteMissionApp(HttpServletRequest request) throws Exception {
         String destinationPage;
         List<MissionEntity> missions = null;
-        List<MissionEntity> missionsNonApprentie = null;
-        List<InscriptionEntity> missionsApprentie = null;
+        List<MissionEntity> missionsNonApprentie =  new ArrayList<>();
+        List<MissionEntity> missionsApprentie =  new ArrayList<>();
         List<InscriptionEntity> listeInscriptionsPourUtilisateur = null;
+
+        //Récupération information utilisateur
         int idApprenant = Integer.parseInt(request.getParameter("idApprenant"));
         UtilisateurEntity utilisateur = utilisateurService.getUtilisateurById(idApprenant);
+
+
         try {
             // On récupère toutes les inscriptions de l'apprenant
             listeInscriptionsPourUtilisateur = inscriptionService.getInscriptionsByIdUsers(idApprenant);
-            // On récupère toutes les missions
             missions = missionService.findAll();
-            // Si l'utilisateur n'est pas déjà inscrit dans la mission
-            if(!missionsApprentie.isEmpty()) {
+            //On les ajoutee dans
+            for (InscriptionEntity inscription : listeInscriptionsPourUtilisateur) {
                 for (MissionEntity mission : missions) {
-
-                    if (!missionsApprentie.contains(mission)) {
-                        missionsNonApprentie.add(mission);
+                    if (mission.getId()==inscription.getFkMission()) {
+                        missionsApprentie.add(mission);
                     }
                 }
             }
 
+            // On récupère toutes les missionsNon apprise
+            for (MissionEntity mission : missions) {
+                if (!missionsApprentie.contains(mission)) {
+                    missionsNonApprentie.add(mission);
+                }
+            }
+
+
+            System.out.println("Taille liste non apprise"+ missionsNonApprentie.size());
+            System.out.println("Taille liste Apprise"+ missionsApprentie.size());
             request.setAttribute("missionsApp", missionsApprentie);
             request.setAttribute("missionsNonApp", missionsNonApprentie);
             destinationPage = "vues/mission/listMissionApp";
