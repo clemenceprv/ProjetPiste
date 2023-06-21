@@ -9,36 +9,6 @@
 <html>
 <head>
     <title>Liste des missions existantes</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-
-        .registration-button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-    </style>
 </head>
 <%@include file="../header.jsp" %>
 <body>
@@ -66,6 +36,20 @@
         </table>
     </div>
 </div>
+</div>
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="col-md-8 col-sm-8">
+        <div class="blanc">
+            <h1 class="text-center">Liste des apprenants</h1>
+            <div class="mt-5"></div>
+            <c:forEach items="${listeApprenants}" var="apprenant">
+                <div class="shadow p-3 mb-5 bg-body-tertiary rounded text-center hover-effect fs-5 w-75 mx-auto" onclick="location.href='/mission/listeMissionApp.htm?idApprenant=${apprenant.numUtil}'">
+                    <span class="text-secondary">${apprenant.surname} ${apprenant.forename}</span>
+                </div>
+            </c:forEach>
+
+        </div>
+    </div>
 </div>
 
 </body>

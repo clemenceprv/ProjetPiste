@@ -25,7 +25,7 @@
             <li>
                 <a class="nav-item nav-link " href="/">Accueil</a>
             </li>
-        <li><a class="nav-item nav-link" href="#">Missions</a></li>
+        <li><a class="nav-item nav-link" href="/mission/choixApprenant">Missions</a></li>
         <li><a class="nav-item nav-link" href="#">Apprenants</a></li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

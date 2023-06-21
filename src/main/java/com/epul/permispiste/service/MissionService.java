@@ -19,4 +19,5 @@ public class MissionService implements IMissionService {
        this.missionRepository = missionRepository;
     }
     public List<MissionEntity> findAll() { return missionRepository.findAll();}
+    public MissionEntity findMissionById(int id) {return missionRepository.findById(id); }
 }
