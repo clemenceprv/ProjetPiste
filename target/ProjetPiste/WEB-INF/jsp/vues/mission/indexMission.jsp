@@ -19,11 +19,6 @@
     <div class="blanc ">
         <br><br>
         <table>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Inscription</th>
-            </tr>
             <c:forEach var="mission" items="${missions}">
                 <tr>
                     <td>${mission.id}</td>
@@ -37,15 +32,17 @@
     </div>
 </div>
 </div>
+<div class="container d-flex justify-content-center align-items-center">
     <div class="col-md-8 col-sm-8">
         <div class="blanc">
             <h1 class="text-center">Liste des apprenants</h1>
             <div class="mt-5"></div>
             <c:forEach items="${listeApprenants}" var="apprenant">
-                <div class="shadow p-3 mb-5 bg-body-tertiary rounded text-center hover-effect fs-5 w-75 mx-auto" onclick="location.href='/jeu/listeMissionApp.htm?idApprenant=${apprenant.numUtil}'">
+                <div class="shadow p-3 mb-5 bg-body-tertiary rounded text-center hover-effect fs-5 w-75 mx-auto" onclick="location.href='/mission/listeMissionApp.htm?idApprenant=${apprenant.numUtil}'">
                     <span class="text-secondary">${apprenant.surname} ${apprenant.forename}</span>
                 </div>
             </c:forEach>
+
         </div>
     </div>
 </div>
