@@ -14,22 +14,18 @@
 <body>
 <%@include file="../navigation.jsp" %>
 <h1>Modifier un apprenant</h1>
-<form method="post" action="/apprenant/edit">
+<form method="post" action="/utilisateur/editApprenant">
     <div class="form-group">
         <label for="id">Id</label>
-        <input type="number" class="form-control" id="id" name="id" readonly="readonly" value="${apprenant.id}">
+        <input type="number" class="form-control" id="id" name="id" readonly="readonly" value="${apprenant.numUtil}">
     </div>
     <div class="form-group">
         <label for="nom">Nom</label>
-        <input type="text" class="form-control" id="nom" name="nom" value="${apprenant.nom}">
+        <input type="text" class="form-control" id="nom" name="nom" value="${apprenant.surname}">
     </div>
     <div class="form-group">
         <label for="prenom">Prenom</label>
-        <input type="number" class="form-control" id="prenom" name="prenom" value="${apprenant.prenom}">
-    </div>
-    <div class="form-group">
-        <label for="role">Score minimum</label>
-        <input type="number" class="form-control" id="role" name="role" value="${apprenant.role}">
+        <input type="text" class="form-control" id="prenom" name="prenom" value="${apprenant.forename}">
     </div>
     <button type="submit" class="btn btn-primary">Enregistrer</button>
 </form>

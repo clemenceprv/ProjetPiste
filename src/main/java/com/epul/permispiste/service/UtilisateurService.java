@@ -22,14 +22,24 @@ public class UtilisateurService implements IUtilisateurService {
         return utilisateurs;
     }
 
+    public List<UtilisateurEntity> getAllApprenant(){
+        List<UtilisateurEntity> utilisateurs=null;
+        try {
+            utilisateurs = utilisateurRepository.findAllByRoleEquals("learner");
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+        return utilisateurs;
+    }
+
     public void delete(int id) {
-        UtilisateurEntity utilisateur = utilisateurRepository.findById(id).get();
+        UtilisateurEntity utilisateur = utilisateurRepository.findByNumUtil(id);
         utilisateurRepository.delete(utilisateur);
     }
 
     @Override
     public UtilisateurEntity getUtilisateurById(int id) {
-        return utilisateurRepository.findById(id).get();
+        return utilisateurRepository.findByNumUtil(id);
     }
 
     public void editUtilisateur(UtilisateurEntity utilisateurEntity) {
@@ -50,4 +60,10 @@ public class UtilisateurService implements IUtilisateurService {
         utilisateurRepository.save(utilisateurEntity);
     }
 
+    public void editApprenant(UtilisateurEntity utiisateurEntity) {
+        UtilisateurEntity utilisateur = utilisateurRepository.findByNumUtil(utiisateurEntity.getNumUtil());
+        utilisateur.setForename(utiisateurEntity.getForename());
+        utilisateur.setSurname(utiisateurEntity.getSurname());
+        utilisateurRepository.save(utilisateur);
+    }
 }

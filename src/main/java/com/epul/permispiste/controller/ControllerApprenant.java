@@ -1,6 +1,8 @@
 package com.epul.permispiste.controller;
 import com.epul.permispiste.domains.ApprenantEntity;
+import com.epul.permispiste.domains.UtilisateurEntity;
 import com.epul.permispiste.service.ApprenantService;
+import com.epul.permispiste.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +18,8 @@ public class ControllerApprenant {
 
     @Autowired
     private ApprenantService apprenantService;
+    @Autowired
+    private UtilisateurService utilisateurService;
 
     private HttpSession session;
 
@@ -55,35 +59,7 @@ public class ControllerApprenant {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value ="/add")
-    public ModelAndView add(HttpServletRequest request, HttpServletResponse response ) {
-        String destinationPage;
-        try {
-            session = request.getSession();
-            if (session.getAttribute("id") == null) {
-                String message = "Vous n'êtes pas connecté !!";
-                request.setAttribute("message", message);
-                destinationPage = "vues/connection/login";
-            }
-            else
-            {
-                ApprenantEntity apprenantEntity = new ApprenantEntity();
-                String nom = request.getParameter("nom");
-                String prenom = request.getParameter("prenom");
-                apprenantEntity.setNomApprenant(nom);
-                apprenantEntity.setPrenomApprenant(prenom);
-                apprenantService.addApprenant(apprenantEntity);
-                request.setAttribute("apprenants", apprenantService.getAll());
-                destinationPage = "/vues/apprenant/afficherApprenants";
-            }
-        } catch (Exception e) {
-            request.setAttribute("MesErreurs", e.getMessage());
-            destinationPage = "/vues/Erreur";
-        }
 
-        // Redirection vers la page jsp appropriee
-        return new ModelAndView(destinationPage);
-    }
 
     @RequestMapping(method = RequestMethod.GET, value ="/editForm/{id}")
     public ModelAndView edit(HttpServletRequest request, @PathVariable(value = "id") int id ) {

@@ -13,8 +13,8 @@
 
 <body>
 <%@include file="../navigation.jsp" %>
-<h1>Ajouter une action</h1>
-<form method="post" action="/apprenant/add">
+<h1>Ajouter un apprenant</h1>
+<form method="post" action="/utilisateur/addApprenant">
     <div class="form-group">
         <label for="nom">Nom</label>
         <input type="text" class="form-control" id="nom" name="nom">
@@ -22,6 +22,10 @@
     <div class="form-group">
         <label for="prenom">Prenom</label>
         <input type="text" class="form-control" id="prenom" name="prenom">
+    </div>
+    <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input type="text" class="form-control" id="password" name="password">
     </div>
     <button type="submit" class="btn btn-primary">Enregistrer</button>
 </form>

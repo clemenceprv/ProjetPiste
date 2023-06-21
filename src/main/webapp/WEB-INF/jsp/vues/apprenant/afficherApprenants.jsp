@@ -31,11 +31,11 @@
 
     <c:forEach items="${apprenants}" var="apprenant">
         <tr>
-            <th>${apprenant.id}</th>
-            <td>${apprenant.nom}</td>
-            <td>${apprenant.prenom}</td>
-            <td><a class="btn btn-secondary" href="/apprenant/editForm/${apprenant.id}" role="button">Modifier</a></td>
-            <td><a class="btn btn-danger" href="/apprenant/delete/${apprenant.id}" role="button">Supprimer</a></td>
+            <th>${apprenant.numUtil}</th>
+            <td>${apprenant.surname}</td>
+            <td>${apprenant.forename}</td>
+            <td><a class="btn btn-secondary" href="/utilisateur/editForm/${apprenant.numUtil}" role="button">Modifier</a></td>
+            <td><a class="btn btn-danger" href="/utilisateur/delete/${apprenant.numUtil}" role="button">Supprimer</a></td>
         </tr>
     </c:forEach>
     </tbody>
