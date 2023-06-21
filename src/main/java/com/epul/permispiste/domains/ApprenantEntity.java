@@ -1,7 +1,6 @@
 package com.epul.permispiste.domains;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
 @Table(name = "apprenant", schema = "projetpermis1", catalog = "")
@@ -11,15 +10,11 @@ public class ApprenantEntity {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "nomApprenant")
+    @Column(name = "nom_apprenant")
     private String nomApprenant;
     @Basic
-    @Column(name = "prenomApprenant")
+    @Column(name = "prenom_apprenant")
     private String prenomApprenant;
-    @OneToMany(mappedBy = "apprenantByFkApprenant")
-    private Collection<ActionCalendrierApprenantEntity> actionCalendrierApprenantsById;
-    @OneToMany(mappedBy = "apprenantByFkApprenant")
-    private Collection<ApprenantJeuCalendrierEntity> apprenantJeuCalendriersById;
 
     public int getId() {
         return id;
@@ -66,21 +61,5 @@ public class ApprenantEntity {
         result = 31 * result + (nomApprenant != null ? nomApprenant.hashCode() : 0);
         result = 31 * result + (prenomApprenant != null ? prenomApprenant.hashCode() : 0);
         return result;
-    }
-
-    public Collection<ActionCalendrierApprenantEntity> getActionCalendrierApprenantsById() {
-        return actionCalendrierApprenantsById;
-    }
-
-    public void setActionCalendrierApprenantsById(Collection<ActionCalendrierApprenantEntity> actionCalendrierApprenantsById) {
-        this.actionCalendrierApprenantsById = actionCalendrierApprenantsById;
-    }
-
-    public Collection<ApprenantJeuCalendrierEntity> getApprenantJeuCalendriersById() {
-        return apprenantJeuCalendriersById;
-    }
-
-    public void setApprenantJeuCalendriersById(Collection<ApprenantJeuCalendrierEntity> apprenantJeuCalendriersById) {
-        this.apprenantJeuCalendriersById = apprenantJeuCalendriersById;
     }
 }

@@ -10,31 +10,33 @@ public class ActionObjectifEntity {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "fk_action")
-    private int fkAction;
+    @Column(name = "fk_action", insertable = false, updatable = false)
+    private Integer fkAction;
     @Basic
-    @Column(name = "fk_objectif")
-    private int fkObjectif;
-    @ManyToOne
-    @JoinColumn(name = "fk_action", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private ActionEntity actionByFkAction;
-    @ManyToOne
-    @JoinColumn(name = "fk_objectif", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private ObjectifEntity objectifByFkObjectif;
+    @Column(name = "fk_objectif", insertable = false, updatable = false)
+    private Integer fkObjectif;
 
-    public int getFkAction() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Integer getFkAction() {
         return fkAction;
     }
 
-    public void setFkAction(int fkAction) {
+    public void setFkAction(Integer fkAction) {
         this.fkAction = fkAction;
     }
 
-    public int getFkObjectif() {
+    public Integer getFkObjectif() {
         return fkObjectif;
     }
 
-    public void setFkObjectif(int fkObjectif) {
+    public void setFkObjectif(Integer fkObjectif) {
         this.fkObjectif = fkObjectif;
     }
 
@@ -45,32 +47,18 @@ public class ActionObjectifEntity {
 
         ActionObjectifEntity that = (ActionObjectifEntity) o;
 
-        if (fkAction != that.fkAction) return false;
-        if (fkObjectif != that.fkObjectif) return false;
+        if (id != that.id) return false;
+        if (fkAction != null ? !fkAction.equals(that.fkAction) : that.fkAction != null) return false;
+        if (fkObjectif != null ? !fkObjectif.equals(that.fkObjectif) : that.fkObjectif != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = fkAction;
-        result = 31 * result + fkObjectif;
+        int result = id;
+        result = 31 * result + (fkAction != null ? fkAction.hashCode() : 0);
+        result = 31 * result + (fkObjectif != null ? fkObjectif.hashCode() : 0);
         return result;
-    }
-
-    public ActionEntity getActionByFkAction() {
-        return actionByFkAction;
-    }
-
-    public void setActionByFkAction(ActionEntity actionByFkAction) {
-        this.actionByFkAction = actionByFkAction;
-    }
-
-    public ObjectifEntity getObjectifByFkObjectif() {
-        return objectifByFkObjectif;
-    }
-
-    public void setObjectifByFkObjectif(ObjectifEntity objectifByFkObjectif) {
-        this.objectifByFkObjectif = objectifByFkObjectif;
     }
 }

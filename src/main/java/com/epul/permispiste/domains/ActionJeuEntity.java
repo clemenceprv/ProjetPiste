@@ -10,7 +10,7 @@ public class ActionJeuEntity {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "fk_action", insertable = false, updatable = false)
+    @Column(name = "fk_action")
     private int fkAction;
     @Basic
     @Column(name = "fk_jeu")
@@ -21,6 +21,14 @@ public class ActionJeuEntity {
     @ManyToOne
     @JoinColumn(name = "fk_jeu", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private JeuEntity jeuByFkJeu;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getFkAction() {
         return fkAction;
@@ -45,6 +53,7 @@ public class ActionJeuEntity {
 
         ActionJeuEntity that = (ActionJeuEntity) o;
 
+        if (id != that.id) return false;
         if (fkAction != that.fkAction) return false;
         if (fkJeu != that.fkJeu) return false;
 
@@ -53,7 +62,8 @@ public class ActionJeuEntity {
 
     @Override
     public int hashCode() {
-        int result = fkAction;
+        int result = id;
+        result = 31 * result + fkAction;
         result = 31 * result + fkJeu;
         return result;
     }

@@ -16,10 +16,10 @@ public class IndicatorEntity {
     @Column(name = "wording")
     private String wording;
     @Basic
-    @Column(name = "valueIfCheck")
+    @Column(name = "value_if_check")
     private Integer valueIfCheck;
     @Basic
-    @Column(name = "valueIfUnCheck")
+    @Column(name = "value_if_un_check")
     private Integer valueIfUnCheck;
     @ManyToOne
     @JoinColumn(name = "fk_action", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)

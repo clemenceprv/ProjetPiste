@@ -22,7 +22,7 @@
     <p>Actions : </p>
     <c:forEach items="${actions}" var="action">
         <div>
-            <input type="checkbox" id=${action.id} name="actions">
+            <input type="checkbox" id=${action.id} value=${action.id} name="actions">
             <label for=${action.id}>${action.wording}</label>
         </div>
     </c:forEach>

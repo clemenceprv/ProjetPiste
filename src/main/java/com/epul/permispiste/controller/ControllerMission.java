@@ -2,13 +2,13 @@ package com.epul.permispiste.controller;
 import com.epul.permispiste.domains.ActionEntity;
 import com.epul.permispiste.domains.ActionMissionEntity;
 import com.epul.permispiste.domains.MissionEntity;
-import com.epul.permispiste.domains.MissionObjectifEntity;
+import com.epul.permispiste.service.ActionMissionService;
 import com.epul.permispiste.service.ActionService;
 import com.epul.permispiste.service.MissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -26,6 +26,8 @@ public class ControllerMission {
 
     @Autowired
     private ActionService actionService;
+    @Autowired
+    private ActionMissionService actionMissionService;
 
     private HttpSession session;
 
@@ -91,17 +93,28 @@ public class ControllerMission {
             {
                 String libelle = request.getParameter("libelle");
                 MissionEntity missionEntity = new MissionEntity();
-                String[] actions = request.getParameterValues("actions");
-                Collection<ActionEntity> listAction = new ArrayList<>();
-                for(String id : actions){
-                    listAction.add(actionService.getAction(Integer.parseInt(id)));
-                }
-                missionEntity.setMissionObjectifsById(new ArrayList<>());
-                //missionEntity.setActionMissionsById(listAction);
+
                 missionEntity.setInscriptionsById(new ArrayList<>());
                 missionEntity.setWording(libelle);
 
-                missionService.addMission(missionEntity);
+
+                MissionEntity mission = missionService.addMission(missionEntity);
+
+
+                /*
+                String[] actions = request.getParameterValues("actions");
+                if(actions!=null && actions.length>0)
+                    for(String idAction : actions){
+                        ActionMissionEntity actionMissionEntity = new ActionMissionEntity();
+                        //actionMissionEntity.setFkMission(mission.getId());
+                        //actionMissionEntity.setActionByFkAction(actionService.getAction(Integer.parseInt(idAction)));
+                        //actionMissionEntity.setMissionByFkMission(null);
+                        actionMissionService.addActionMission(actionMissionEntity);
+                    }
+                */
+
+
+
                 request.setAttribute("missions", missionService.getAll());
                 destinationPage = "/vues/mission/afficherMissions";
             }

@@ -15,6 +15,8 @@ public class JeuEntity {
     private String libellejeu;
     @OneToMany(mappedBy = "jeuByFkJeu")
     private Collection<ActionJeuEntity> actionJeusById;
+    @OneToMany(mappedBy = "jeuByFkJeu")
+    private Collection<UtilisateurJeuEntity> utilisateurJeusById;
 
     public int getId() {
         return id;
@@ -40,9 +42,7 @@ public class JeuEntity {
         JeuEntity jeuEntity = (JeuEntity) o;
 
         if (id != jeuEntity.id) return false;
-        if (libellejeu != null ? !libellejeu.equals(jeuEntity.libellejeu) : jeuEntity.libellejeu != null) return false;
-
-        return true;
+        return libellejeu != null ? libellejeu.equals(jeuEntity.libellejeu) : jeuEntity.libellejeu == null;
     }
 
     @Override
@@ -59,4 +59,15 @@ public class JeuEntity {
     public void setActionJeusById(Collection<ActionJeuEntity> actionJeusById) {
         this.actionJeusById = actionJeusById;
     }
+
+    public Collection<UtilisateurJeuEntity> getUtilisateurJeusById() {
+        return utilisateurJeusById;
+    }
+
+    public void setUtilisateurJeusById(Collection<UtilisateurJeuEntity> utilisateurJeusById) {
+        this.utilisateurJeusById = utilisateurJeusById;
+    }
+
+
+
 }

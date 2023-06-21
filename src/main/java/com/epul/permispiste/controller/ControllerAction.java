@@ -1,12 +1,10 @@
 package com.epul.permispiste.controller;
 
 import com.epul.permispiste.domains.ActionEntity;
-import com.epul.permispiste.domains.UtilisateurEntity;
 import com.epul.permispiste.service.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

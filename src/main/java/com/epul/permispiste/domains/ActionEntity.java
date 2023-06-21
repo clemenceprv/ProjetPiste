@@ -17,7 +17,7 @@ public class ActionEntity {
     @Column(name = "wording")
     private String wording;
     @Basic
-    @Column(name = "scoreMinimum")
+    @Column(name = "score_minimum")
     private Integer scoreMinimum;
     @ManyToOne
     @JoinColumn(name = "fk_action", referencedColumnName = "id")
@@ -25,17 +25,9 @@ public class ActionEntity {
     @OneToMany(mappedBy = "actionByFkAction")
     private Collection<ActionEntity> actionsById;
     @OneToMany(mappedBy = "actionByFkAction")
-    private Collection<ActionCalendrierApprenantEntity> actionCalendrierApprenantsById;
-    @OneToMany(mappedBy = "actionByFkAction")
     private Collection<ActionJeuEntity> actionJeusById;
     @OneToMany(mappedBy = "actionByFkAction")
     private Collection<ActionMissionEntity> actionMissionsById;
-    @OneToMany(mappedBy = "actionByFkAction")
-    private Collection<ActionObjectifEntity> actionObjectifsById;
-    @OneToMany(mappedBy = "actionByFkAction")
-    private Collection<ActionRegleEntity> actionReglesById;
-    @OneToMany(mappedBy = "actionByFkAction")
-    private Collection<ApprenantJeuCalendrierEntity> apprenantJeuCalendriersById;
     @OneToMany(mappedBy = "actionByFkAction")
     private Collection<IndicatorEntity> indicatorsById;
     @OneToMany(mappedBy = "actionByFkAction")
@@ -113,14 +105,6 @@ public class ActionEntity {
         this.actionsById = actionsById;
     }
 
-    public Collection<ActionCalendrierApprenantEntity> getActionCalendrierApprenantsById() {
-        return actionCalendrierApprenantsById;
-    }
-
-    public void setActionCalendrierApprenantsById(Collection<ActionCalendrierApprenantEntity> actionCalendrierApprenantsById) {
-        this.actionCalendrierApprenantsById = actionCalendrierApprenantsById;
-    }
-
     public Collection<ActionJeuEntity> getActionJeusById() {
         return actionJeusById;
     }
@@ -137,30 +121,6 @@ public class ActionEntity {
         this.actionMissionsById = actionMissionsById;
     }
 
-    public Collection<ActionObjectifEntity> getActionObjectifsById() {
-        return actionObjectifsById;
-    }
-
-    public void setActionObjectifsById(Collection<ActionObjectifEntity> actionObjectifsById) {
-        this.actionObjectifsById = actionObjectifsById;
-    }
-
-    public Collection<ActionRegleEntity> getActionReglesById() {
-        return actionReglesById;
-    }
-
-    public void setActionReglesById(Collection<ActionRegleEntity> actionReglesById) {
-        this.actionReglesById = actionReglesById;
-    }
-
-    public Collection<ApprenantJeuCalendrierEntity> getApprenantJeuCalendriersById() {
-        return apprenantJeuCalendriersById;
-    }
-
-    public void setApprenantJeuCalendriersById(Collection<ApprenantJeuCalendrierEntity> apprenantJeuCalendriersById) {
-        this.apprenantJeuCalendriersById = apprenantJeuCalendriersById;
-    }
-
     public Collection<IndicatorEntity> getIndicatorsById() {
         return indicatorsById;
     }
@@ -175,9 +135,5 @@ public class ActionEntity {
 
     public void setInscriptionActionsById(Collection<InscriptionActionEntity> inscriptionActionsById) {
         this.inscriptionActionsById = inscriptionActionsById;
-    }
-
-    public void setActionWording(String wording) {
-        this.wording = wording;
     }
 }

@@ -1,17 +1,11 @@
 package com.epul.permispiste.service;
 
-import com.epul.permispiste.domains.ActionEntity;
 import com.epul.permispiste.domains.MissionEntity;
-import com.epul.permispiste.mesExceptions.MonException;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.epul.permispiste.repositories.MissionRepository;
 
 
-import java.util.Collection;
 import java.util.List;
 
 
@@ -38,8 +32,8 @@ public class MissionService implements IMissionService {
     }
 
     @Override
-    public void addMission(MissionEntity missionEntity)  {
-        missionRepository.save(missionEntity);
+    public MissionEntity addMission(MissionEntity missionEntity)  {
+        return missionRepository.save(missionEntity);
     }
 
     @Override

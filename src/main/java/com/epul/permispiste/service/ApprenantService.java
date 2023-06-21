@@ -36,8 +36,8 @@ public class ApprenantService implements IApprenantService {
         ApprenantEntity apprenant = apprenantRepository.findById(missionEntity.getId()).get();
         apprenant.setNomApprenant(missionEntity.getNomApprenant());
         apprenant.setPrenomApprenant(missionEntity.getPrenomApprenant());
-        apprenant.setActionCalendrierApprenantsById(missionEntity.getActionCalendrierApprenantsById());
-        apprenant.setApprenantJeuCalendriersById(missionEntity.getApprenantJeuCalendriersById());
+        //apprenant.setActionCalendrierApprenantsById(missionEntity.getActionCalendrierApprenantsById());
+        //apprenant.setApprenantJeuCalendriersById(missionEntity.getApprenantJeuCalendriersById());
         apprenantRepository.save(apprenant);
     }
 

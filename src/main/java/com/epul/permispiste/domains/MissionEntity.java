@@ -17,8 +17,6 @@ public class MissionEntity {
     private Collection<ActionMissionEntity> actionMissionsById;
     @OneToMany(mappedBy = "missionByFkMission")
     private Collection<InscriptionEntity> inscriptionsById;
-    @OneToMany(mappedBy = "missionByFkMission")
-    private Collection<MissionObjectifEntity> missionObjectifsById;
 
     public int getId() {
         return id;
@@ -70,13 +68,5 @@ public class MissionEntity {
 
     public void setInscriptionsById(Collection<InscriptionEntity> inscriptionsById) {
         this.inscriptionsById = inscriptionsById;
-    }
-
-    public Collection<MissionObjectifEntity> getMissionObjectifsById() {
-        return missionObjectifsById;
-    }
-
-    public void setMissionObjectifsById(Collection<MissionObjectifEntity> missionObjectifsById) {
-        this.missionObjectifsById = missionObjectifsById;
     }
 }

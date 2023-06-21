@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface IMissionService {
 
-    void addMission(MissionEntity missionEntity);
+    MissionEntity addMission(MissionEntity missionEntity);
 
     MissionEntity getMissionById(int id);
 
