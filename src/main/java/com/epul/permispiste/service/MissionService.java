@@ -2,95 +2,21 @@ package com.epul.permispiste.service;
 
 import com.epul.permispiste.domains.MissionEntity;
 import com.epul.permispiste.mesExceptions.MonException;
+import com.epul.permispiste.repositories.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class MissionService implements IMissionService {
+    private MissionRepository missionRepository;
 
-    //  ***************************************
-    //  On récupère la liste des missions
-    //  ***************************************
-    public List<MissionEntity> getAll() throws MonException {
-        List<MissionEntity> missions;
-        String request = "SELECT m FROM MissionEntity m";
-
-        try {
-            Session session = ServiceHibernate.currentSession();
-            missions = session.createQuery(request, MissionEntity.class).getResultList();
-            session.close();
-        } catch (Exception e) {
-            throw e;
-        }
-
-        return missions;
+    @Autowired
+    public MissionService(MissionRepository missionRepository) {
+       this.missionRepository = missionRepository;
     }
-
-    //  ***************************************
-    //  Obtention d'une mission par son id
-    //  ***************************************
-    public MissionEntity getMissionById(int id) {
-        MissionEntity missions;
-        String request = "SELECT m FROM MissionEntity m WHERE m.id=" + id;
-        try {
-            Session session = ServiceHibernate.currentSession();
-            missions = (MissionEntity) session.createQuery(request).getResultList().get(0);
-            session.close();
-        } catch (Exception e) {
-            throw e;
-        }
-
-        return missions;
-    }
-
-    //  ***************************************
-    //  Ajout d'une mission
-    //  ***************************************
-    public void insert(MissionEntity missionEntity) {
-        Transaction tx;
-        try {
-            Session session = ServiceHibernate.currentSession();
-            tx = session.beginTransaction();
-            session.save(missionEntity);
-            tx.commit();
-            session.close();
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    //  ***************************************
-    //  Suppression d'une mission
-    //  ***************************************
-    public void delete(MissionEntity missionEntity) {
-        Transaction tx;
-        try {
-            Session session = ServiceHibernate.currentSession();
-            tx = session.beginTransaction();
-            session.delete(missionEntity);
-            tx.commit();
-            session.close();
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    //  ***************************************
-    //  Mise à jours d'une mission
-    //  ***************************************
-    public void update(MissionEntity missionEntity) {
-        Transaction tx;
-        try {
-            Session session = ServiceHibernate.currentSession();
-            tx = session.beginTransaction();
-            session.merge(missionEntity);
-            tx.commit();
-            session.close();
-        } catch (Exception e) {
-            throw e;
-        }
-    }
+    public List<MissionEntity> findAll() { return missionRepository.findAll();}
 }
