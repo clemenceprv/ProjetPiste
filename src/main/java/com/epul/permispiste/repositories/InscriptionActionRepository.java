@@ -10,5 +10,6 @@ import java.util.List;
 public interface InscriptionActionRepository extends JpaRepository<InscriptionActionEntity, Integer> {
     public List<InscriptionActionEntity> findAllByFkInscription(int id);
     public InscriptionActionEntity findByFkActionAndFkInscription(int idAction, int idInscription);
+    public InscriptionActionEntity save(InscriptionActionEntity inscriptionActionEntity);
 }
 

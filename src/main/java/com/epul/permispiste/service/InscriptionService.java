@@ -18,9 +18,20 @@ public class InscriptionService implements IInscriptionService {
 
     public InscriptionRepository inscriptionRepository;
 
+    public ActionMissionRepository actionMissionRepository;
+
+    public ActionRepository actionRepository;
+    public InscriptionActionRepository inscriptionActionRepository;
+
+
     @Autowired
-    public InscriptionService(InscriptionRepository inscriptionRepository) {
+    public InscriptionService(InscriptionRepository inscriptionRepository,
+                              ActionMissionRepository actionMissionRepository,
+                              ActionRepository actionRepository, InscriptionActionRepository inscriptionActionRepository) {
         this.inscriptionRepository = inscriptionRepository;
+        this.actionMissionRepository = actionMissionRepository;
+        this.actionRepository = actionRepository;
+        this.inscriptionActionRepository = inscriptionActionRepository;
     }
 
     public List<InscriptionEntity> getInscriptionsByIdUsers(int id) {

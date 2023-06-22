@@ -3,14 +3,10 @@
 
     <persistence-unit name="persistenceUnit">
         <class>com.epul.permispiste.domains.ActionEntity</class>
-        <class>com.epul.permispiste.domains.ActionCalendrierApprenantEntity</class>
         <class>com.epul.permispiste.domains.ActionJeuEntity</class>
         <class>com.epul.permispiste.domains.ActionMissionEntity</class>
         <class>com.epul.permispiste.domains.ActionObjectifEntity</class>
         <class>com.epul.permispiste.domains.ActionRegleEntity</class>
-        <class>com.epul.permispiste.domains.ApprenantEntity</class>
-        <class>com.epul.permispiste.domains.ApprenantJeuCalendrierEntity</class>
-        <class>com.epul.permispiste.domains.CalendrierEntity</class>
         <class>com.epul.permispiste.domains.IndicatorEntity</class>
         <class>com.epul.permispiste.domains.InscriptionEntity</class>
         <class>com.epul.permispiste.domains.InscriptionActionEntity</class>
@@ -21,9 +17,7 @@
         <class>com.epul.permispiste.domains.RegleEntity</class>
         <class>com.epul.permispiste.domains.UtilisateurEntity</class>
         <class>com.epul.permispiste.domains.ActionApprenantEntity</class>
-        <class>com.epul.permispiste.domains.ApprenantJeuEntity</class>
         <class>com.epul.permispiste.domains.UtilisateurJeuEntity</class>
-        <class>com.epul.permispiste.domains.HibernateSequenceEntity</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/projetpermis1"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>

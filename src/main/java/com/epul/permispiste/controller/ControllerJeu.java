@@ -73,9 +73,9 @@ public class ControllerJeu {
         String destinationPage = "";
         try {
             List<UtilisateurEntity> listeApprenants = ServiceUtilisateur.getLearnerUsers();
-            System.out.println("BOdozejrfiofjpozegshmiofzhgrehgeiusgheruk");
             System.out.println(listeApprenants);
             request.setAttribute("listeApprenants", listeApprenants);
+            request.setAttribute("controllerType", request.getParameter("controllerType"));
             destinationPage = "vues/jeu/choixApprenants";
         } catch (MonException e) {
             request.setAttribute("MesErreurs", e.getMessage());
@@ -397,6 +397,7 @@ public class ControllerJeu {
 
 
             request.setAttribute("Utilisateur", Utilisateurs);
+            request.setAttribute("controllerType", "getJeuxRealise");
             System.out.println("numéro"+ idUser);
             request.setAttribute("listeJeux", listeJeux);
             request.setAttribute("listeJeuxRealise", listeJeuxPourUtilisateur);

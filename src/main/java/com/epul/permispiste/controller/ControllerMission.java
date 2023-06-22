@@ -104,6 +104,7 @@ public class ControllerMission {
             System.out.println("Taille liste Apprise"+ missionsApprentie.size());
             request.setAttribute("missionsApp", missionsApprentie);
             request.setAttribute("missionsNonApp", missionsNonApprentie);
+            request.setAttribute("idApprenant", idApprenant);
             destinationPage = "vues/mission/listMissionApp";
         } catch (Exception e) {
             request.setAttribute("errors", e.getMessage());

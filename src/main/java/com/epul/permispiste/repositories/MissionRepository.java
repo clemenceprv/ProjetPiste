@@ -1,7 +1,5 @@
 package com.epul.permispiste.repositories;
 
-import com.epul.permispiste.domains.ActionJeuEntity;
-import com.epul.permispiste.domains.ApprenantEntity;
 import com.epul.permispiste.domains.MissionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -12,19 +12,13 @@ import javax.servlet.http.HttpSession;
 public class ControllerHome {
     private HttpSession session;
 
-    /*@GetMapping("/")
+    @GetMapping("/")
     public ModelAndView home(HttpServletRequest request) {
         String destinationPage = "index";
         session = request.getSession();
         if (session.getAttribute("id") == null) {
             destinationPage = "vues/connection/login";
         }
-        return new ModelAndView(destinationPage);
-    }*/
-
-    @GetMapping("/coucou")
-    public ModelAndView coucou(HttpServletRequest request) {
-        String destinationPage = "vues/jeu/test";
         return new ModelAndView(destinationPage);
     }
 }

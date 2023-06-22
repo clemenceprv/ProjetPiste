@@ -33,40 +33,38 @@ public class ControllerLogin {
         return new ModelAndView("/vues/connection/login");
     }
 
-    ///
+
+    // Contrôle Login
     //
-    //// Contrôle Login
-    ///
-    ////
-//    @RequestMapping(method = RequestMethod.POST, value = "/getLogin")
-//    public RedirectView controleLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//        String destinationPage;
-//        UtilisateurEntity unUtilisateur= new UtilisateurEntity();
-//        HttpSession session;
-//        try {
-//            String login = request.getParameter("login");
-//            String pwd = request.getParameter("password");
-//            unUtilisateur.setNomUtil(login);
-//            unUtilisateur.setMotPasse(pwd);
-//            String message = "";
-//
-//            unUtilisateur = unAuthenService.authentification(unUtilisateur);
-//            if (unUtilisateur != null) {
-//                session = request.getSession();
-//                session.setAttribute("id", unUtilisateur.getNumUtil());
-//                destinationPage = "/index";
-//            } else {
-//                message = "mot de passe erroné";
-//                request.setAttribute("message", message);
-//                destinationPage = "/vues/connection/login";
-//            }
-//        }catch (Exception e) {
-//            request.setAttribute("MesErreurs", e.getMessage());
-//            destinationPage = "/vues/Erreur";
-//        }
-//
-//        return new RedirectView(destinationPage);
-//    }
+    @RequestMapping(method = RequestMethod.POST, value = "/getLogin")
+    public RedirectView controleLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String destinationPage;
+        UtilisateurEntity unUtilisateur= new UtilisateurEntity();
+        HttpSession session;
+        try {
+            String login = request.getParameter("login");
+            String pwd = request.getParameter("password");
+            unUtilisateur.setNomUtil(login);
+            unUtilisateur.setMotPasse(pwd);
+            String message = "";
+
+            unUtilisateur = unAuthenService.authentification(unUtilisateur);
+            if (unUtilisateur != null) {
+                session = request.getSession();
+                session.setAttribute("id", unUtilisateur.getNumUtil());
+                destinationPage = "/";
+            } else {
+                message = "mot de passe erroné";
+                request.setAttribute("message", message);
+                destinationPage = "/vues/connection/login";
+            }
+        }catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            destinationPage = "/vues/Erreur";
+        }
+
+        return new RedirectView(destinationPage);
+    }
 
 }
 
