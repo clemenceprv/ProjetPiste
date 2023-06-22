@@ -1,19 +1,15 @@
 package com.epul.permispiste.controller;
 
-import com.epul.permispiste.domains.InscriptionEntity;
-import com.epul.permispiste.domains.MissionEntity;
-import com.epul.permispiste.domains.UtilisateurEntity;
-import com.epul.permispiste.domains.UtilisateurJeuEntity;
+import com.epul.permispiste.domains.*;
 import com.epul.permispiste.mesExceptions.MonException;
 import com.epul.permispiste.service.InscriptionService;
-import com.epul.permispiste.service.JeuService;
 import com.epul.permispiste.service.MissionService;
 import com.epul.permispiste.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -57,7 +53,7 @@ public class ControllerMission {
     @GetMapping(value= "choixApprenant")
     public ModelAndView selectionnerApprenant(HttpServletRequest request, HttpServletResponse response) throws Exception
     {
-        String destinationPage = "";
+        String destinationPage;
         try {
             List<UtilisateurEntity> listeApprenants = utilisateurService.getLearnerUsers();
             System.out.println(listeApprenants);
@@ -81,7 +77,6 @@ public class ControllerMission {
 
         //Récupération information utilisateur
         int idApprenant = Integer.parseInt(request.getParameter("idApprenant"));
-        UtilisateurEntity utilisateur = utilisateurService.getUtilisateurById(idApprenant);
 
 
         try {
@@ -115,6 +110,61 @@ public class ControllerMission {
             destinationPage = "layouts/error";
         }
         return new ModelAndView(destinationPage);
+    }
+
+    @RequestMapping(value = "ajouterApprenant.htm")
+    public void ajouterApp(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        try {
+            System.out.println("Début controlleur");
+            //Récupération Information utilisateur
+            int idApprenant = Integer.parseInt(request.getParameter("idApprenant"));
+            System.out.println("idApprenant" + idApprenant);
+
+            //Récupération Information mission
+            int idMission = Integer.parseInt(request.getParameter("idMission"));
+            System.out.println("idMission" + idMission);
+
+            InscriptionEntity inscriptionEntity = inscriptionService.addNewInscription(idApprenant,idMission);
+            System.out.println("Appelle controlleur avant redirection");
+            String redirectUrl = "/mission/ajouterMissionPourInscription.htm?inscriptionId="+inscriptionEntity.getId()+
+                    "&idApprenant="+idApprenant+"&idMission="+idMission;
+            response.sendRedirect(redirectUrl);
+
+        }  catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            String destinationPage = "vues/Erreur";
+            RequestDispatcher dispatcher = request.getRequestDispatcher(destinationPage);
+            dispatcher.forward(request, response);
+        }
+    }
+
+    @RequestMapping(value = "ajouterMissionPourInscription.htm")
+    public void ajouterNewApp(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        try {
+            System.out.println("Début controlleur");
+            //Récupération Information utilisateur
+            int idApprenant = Integer.parseInt(request.getParameter("idApprenant"));
+            System.out.println("idApprenant" + idApprenant);
+
+            //Récupération Information mission
+            int idMission = Integer.parseInt(request.getParameter("idMission"));
+            System.out.println("idMission" + idMission);
+
+            // Récupération id Inscription
+            int idInscription = Integer.parseInt(request.getParameter("inscriptionId"));
+            System.out.println("Inscription id"+idInscription);
+
+            inscriptionService.addNewInscriptionAction(idApprenant,idMission, idInscription);
+            System.out.println("Appelle controlleur avant redirection");
+            String redirectUrl = "/";
+            response.sendRedirect(redirectUrl);
+
+        }  catch (Exception e) {
+            request.setAttribute("MesErreurs", e.getMessage());
+            String destinationPage = "vues/Erreur";
+            RequestDispatcher dispatcher = request.getRequestDispatcher(destinationPage);
+            dispatcher.forward(request, response);
+        }
     }
 
 

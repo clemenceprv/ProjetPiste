@@ -16,7 +16,7 @@
 <%@include file="../navigation.jsp" %>
 <div class="col-auto row justify-content-center">
     <div class="blanc ">
-        <form action="/jeu/ajouterApprenant.htm" method="post">
+        <form action="/mission/ajouterApprenant.htm" method="post">
             <input type="hidden" name="idApprenant" value="${idApprenant}" />
                 <div class="container">
                     <h2>Missions Apprise</h2>
@@ -40,6 +40,7 @@
                             <tr>
                                 <td>${missionNonApp.id}</td>
                                 <td>${missionNonApp.wording}</td>
+                                <input type="hidden" name="idMission" value="${missionNonApp.id}" />
                                 <td>
                                     <button type="submit">Affecter l'apprenant à la mission</button>
                                 </td>

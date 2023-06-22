@@ -8,7 +8,9 @@ import java.util.List;
 
 @Repository
 public interface InscriptionRepository extends JpaRepository<InscriptionEntity, Integer> {
-    public List<InscriptionEntity> findAllByFkUser(int id);
+     List<InscriptionEntity> findAllByFkUser(int id);
+     InscriptionEntity save(InscriptionEntity inscriptionEntity);
+     InscriptionEntity findInscriptionEntityById(Integer id);
 
 
 }
