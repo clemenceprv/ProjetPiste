@@ -10,11 +10,15 @@ import java.util.Optional;
 @Service
 public class ActionService{
 
-    @Autowired
-    private ActionRepository uneActionRepository;
+    private ActionRepository actionRepository;
 
-    public ActionEntity getUneActionID(int id) {
-        return null;
+    @Autowired
+    public ActionService(ActionRepository actionRepository) {
+        this.actionRepository = actionRepository;
+    }
+
+    public ActionEntity getActionById(int id) {
+        return actionRepository.findActionEntityById(id);
     }
 
 }

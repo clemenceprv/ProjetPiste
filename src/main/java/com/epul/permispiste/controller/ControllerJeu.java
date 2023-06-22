@@ -27,7 +27,7 @@ public class ControllerJeu {
     private InscriptionActionService inscriptionActionService;
 
     @Autowired
-    private ActionWRepoService actionWRepoService;
+    private ActionService actionWRepoService;
 
     @Autowired
     private UtilisateurService utilisateurService;
@@ -40,8 +40,6 @@ public class ControllerJeu {
 
     @Autowired
     private IndicateurService indicateurService;
-
-
 
     @Autowired
     private UtilisateurService ServiceUtilisateur;
