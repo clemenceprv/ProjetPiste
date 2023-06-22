@@ -22,9 +22,21 @@
       <h1 class="text-center">Liste des apprenants</h1>
       <div class="mt-5"></div>
       <c:forEach items="${listeApprenants}" var="apprenant">
-        <div class="shadow p-3 mb-5 bg-body-tertiary rounded text-center hover-effect fs-5 w-75 mx-auto" onclick="location.href='/jeu/listeJeuxPossiblesApprenant.htm?idApprenant=${apprenant.numUtil}'">
-          <span class="text-secondary">${apprenant.surname} ${apprenant.forename}</span>
-        </div>
+
+        <c:if test="${controllerType=='jeu'}">
+          <div class="shadow p-3 mb-5 bg-body-tertiary rounded text-center hover-effect fs-5 w-75 mx-auto" onclick="location.href='/jeu/listeJeuxPossiblesApprenant.htm?idApprenant=${apprenant.numUtil}'">
+            <span class="text-secondary">${apprenant.surname} ${apprenant.forename}</span>
+          </div>
+        </c:if>
+
+        <c:if test="${controllerType=='voirJeu'}">
+          <div class="shadow p-3 mb-5 bg-body-tertiary rounded text-center hover-effect fs-5 w-75 mx-auto" onclick="location.href='/jeu/listeJeuxRealise.htm?idApprenant=${apprenant.numUtil}'">
+            <span class="text-secondary">${apprenant.surname} ${apprenant.forename}</span>
+          </div>
+        </c:if>
+
+
+
       </c:forEach>
 
     </div>

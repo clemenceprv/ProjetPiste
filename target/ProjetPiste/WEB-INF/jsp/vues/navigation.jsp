@@ -33,7 +33,9 @@
                 </a>
                 <ul class="dropdown-menu">
                     <!-- A modifier selon si admin / apprenant-->
-                    <li><a class="dropdown-item" href="/jeu/choixApprenant">Jouer à un jeu</a></li>
+                    <li><a class="dropdown-item" href="/jeu/choixApprenant?controllerType=jeu">Jouer à un jeu</a></li>
+                    <li><a class="dropdown-item" href="/jeu/choixApprenant?controllerType=voirJeu">Voir jeu réalisés</a></li>
+
                 </ul>
             </li>
 
