@@ -2,6 +2,7 @@ package com.epul.permispiste.domains;
 
 import javax.persistence.*;
 
+
 @Entity
 @Table(name = "action__objectif", schema = "projetpermis1", catalog = "")
 public class ActionObjectifEntity {
@@ -62,3 +63,4 @@ public class ActionObjectifEntity {
         return result;
     }
 }
+

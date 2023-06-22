@@ -4,8 +4,9 @@ import com.epul.permispiste.domains.ActionEntity;
 import com.epul.permispiste.repositories.ActionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+
+
 
 @Service
 public class ActionService{
@@ -21,6 +22,12 @@ public class ActionService{
             System.out.println(e);
         }
         return action;
+    }
+
+
+    public ActionEntity getActionById(int id) {
+        return actionRepository.findActionEntityById(id);
+
     }
 
     public List<ActionEntity> getAllAction() {
@@ -48,4 +55,5 @@ public class ActionService{
         ActionEntity action = actionRepository.findById(id).get();
         actionRepository.delete(action);
     }
+
 }

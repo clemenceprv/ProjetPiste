@@ -1,3 +1,4 @@
+
 package com.epul.permispiste.domains;
 
 import javax.persistence.*;

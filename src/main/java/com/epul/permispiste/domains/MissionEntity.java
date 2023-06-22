@@ -1,4 +1,6 @@
+
 package com.epul.permispiste.domains;
+
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -70,3 +72,4 @@ public class MissionEntity {
         this.inscriptionsById = inscriptionsById;
     }
 }
+

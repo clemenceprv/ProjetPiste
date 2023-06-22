@@ -10,10 +10,14 @@ import java.util.List;
 
 
 @Service
-public class MissionService implements IMissionService {
+public class MissionService {
+
+    private MissionRepository missionRepository;
 
     @Autowired
-    private MissionRepository missionRepository;
+    public MissionService(MissionRepository missionRepository) {
+        this.missionRepository = missionRepository;
+    }
 
     public List<MissionEntity> getAll(){
         List<MissionEntity> missions=null;
@@ -26,23 +30,26 @@ public class MissionService implements IMissionService {
     }
 
     public void editMission(MissionEntity missionEntity) {
-        MissionEntity mission = missionRepository.findById(missionEntity.getId()).get();
+        MissionEntity mission = missionRepository.findById(missionEntity.getId());
         mission.setWording(missionEntity.getWording());
         missionRepository.save(mission);
     }
 
-    @Override
+
     public MissionEntity addMission(MissionEntity missionEntity)  {
         return missionRepository.save(missionEntity);
     }
 
-    @Override
+
     public MissionEntity getMissionById(int id) {
-        return missionRepository.findById(id).get();
+        return missionRepository.findById(id);
     }
 
     public void delete(int id) {
-        MissionEntity mission = missionRepository.findById(id).get();
+        MissionEntity mission = missionRepository.findById(id);
         missionRepository.delete(mission);
     }
+
+    public List<MissionEntity> findAll() { return missionRepository.findAll();}
+    public MissionEntity findMissionById(int id) {return missionRepository.findById(id); }
 }

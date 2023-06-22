@@ -11,7 +11,8 @@ public interface UtilisateurRepository extends JpaRepository<UtilisateurEntity, 
 
     public UtilisateurEntity getFirstByNomUtil(String nom);
     public UtilisateurEntity findByNumUtil(int num);
-
+    UtilisateurEntity findUtilisateurEntitiesByNumUtil(int idUser);
     public List<UtilisateurEntity> findAllByRoleEquals(String role);
+    List<UtilisateurEntity> findUtilisateurEntitiesByRole(String role);
 }
 

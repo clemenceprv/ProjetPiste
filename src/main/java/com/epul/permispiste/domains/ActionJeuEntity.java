@@ -2,6 +2,7 @@ package com.epul.permispiste.domains;
 
 import javax.persistence.*;
 
+
 @Entity
 @Table(name = "action__jeu", schema = "projetpermis1", catalog = "")
 public class ActionJeuEntity {
@@ -84,3 +85,4 @@ public class ActionJeuEntity {
         this.jeuByFkJeu = jeuByFkJeu;
     }
 }
+

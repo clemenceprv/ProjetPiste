@@ -1,3 +1,4 @@
+
 package com.epul.permispiste.domains;
 
 import javax.persistence.*;
@@ -137,3 +138,4 @@ public class ActionEntity {
         this.inscriptionActionsById = inscriptionActionsById;
     }
 }
+

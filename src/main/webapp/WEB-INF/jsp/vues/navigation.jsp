@@ -25,10 +25,36 @@
             <li>
                 <a class="nav-item nav-link " href="/">Accueil</a>
             </li>
-            <li><a class="nav-item nav-link" href="/mission/index">Missions</a></li>
+
             <li><a class="nav-item nav-link" href="/utilisateur/indexApprenant">Apprenants</a></li>
-            <li><a class="nav-item nav-link " href="#">Jeux</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Missions
+                </a>
+                <ul class="dropdown-menu">
+                    <!-- A modifier selon si admin / apprenant-->
+                    <li><a class="nav-item nav-link" href="/mission/index">Gérer les missions</a></li>
+                    <li><a class="nav-item nav-link" href="/mission/choixApprenant">Affecter une mission</a></li>
+
+                </ul>
+            </li>
+
+
             <li><a class="nav-item nav-link " href="/action/getAll">Actions</a></li>
+
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Jeux
+                </a>
+                <ul class="dropdown-menu">
+                    <!-- A modifier selon si admin / apprenant-->
+                    <li><a class="dropdown-item" href="/jeu/choixApprenant?controllerType=jeu">Jouer à un jeu</a></li>
+                    <li><a class="dropdown-item" href="/jeu/choixApprenant?controllerType=voirJeu">Voir jeu réalisés</a></li>
+
+                </ul>
+            </li>
+
             <li><a class="nav-item nav-link " href="/login/deconnection">Deconnection</a></li>
         </ul>
     </div>

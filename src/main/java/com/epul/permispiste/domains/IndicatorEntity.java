@@ -100,3 +100,4 @@ public class IndicatorEntity {
         this.actionByFkAction = actionByFkAction;
     }
 }
+
