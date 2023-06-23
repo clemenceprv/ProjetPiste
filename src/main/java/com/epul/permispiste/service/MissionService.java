@@ -1,11 +1,15 @@
 package com.epul.permispiste.service;
 
+import com.epul.permispiste.domains.ActionEntity;
+import com.epul.permispiste.domains.ActionMissionEntity;
 import com.epul.permispiste.domains.MissionEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.epul.permispiste.repositories.MissionRepository;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -25,9 +29,16 @@ public class MissionService implements IMissionService {
         return missions;
     }
 
-    public void editMission(MissionEntity missionEntity) {
+    public void editMission(MissionEntity missionEntity, Collection<ActionMissionEntity> actionMissions) {
         MissionEntity mission = missionRepository.findById(missionEntity.getId()).get();
-        mission.setWording(missionEntity.getWording());
+        //missionRepository.delete(mission);
+        //mission = new MissionEntity();
+        //mission.setId(missionEntity.getId());
+        //System.out.println("ICI"+mission.getActionMissionsById());
+        // Définissez la liste d'actions pour la mission
+        //mission.setActionMissionsById(actionMissions);
+        //mission.setWording(missionEntity.getWording());
+        //missionEntity.setActionMissionsById(new ArrayList<>());
         missionRepository.save(mission);
     }
 

@@ -6,10 +6,12 @@ import javax.persistence.*;
 @Table(name = "action__mission", schema = "projetpermis1", catalog = "")
 @IdClass(ActionMissionEntityPK.class)
 public class ActionMissionEntity {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "fk_action")
     private int fkAction;
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "fk_mission")

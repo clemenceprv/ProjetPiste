@@ -27,6 +27,8 @@ public class ActionEntity {
     @OneToMany(mappedBy = "actionByFkAction")
     private Collection<ActionJeuEntity> actionJeusById;
     @OneToMany(mappedBy = "actionByFkAction")
+    //,cascade = CascadeType.ALL,
+      //      orphanRemoval = true)
     private Collection<ActionMissionEntity> actionMissionsById;
     @OneToMany(mappedBy = "actionByFkAction")
     private Collection<IndicatorEntity> indicatorsById;

@@ -1,4 +1,5 @@
 package com.epul.permispiste.controller;
+
 import com.epul.permispiste.domains.ActionEntity;
 import com.epul.permispiste.domains.ActionMissionEntity;
 import com.epul.permispiste.domains.MissionEntity;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 @RequestMapping("/mission")
@@ -40,9 +42,7 @@ public class ControllerMission {
                 String message = "Vous n'êtes pas connecté !!";
                 request.setAttribute("message", message);
                 destinationPage = "vues/connection/login";
-            }
-            else
-            {
+            } else {
                 request.setAttribute("missions", missionService.getAll());
                 destinationPage = "/vues/mission/afficherMissions";
             }
@@ -64,9 +64,7 @@ public class ControllerMission {
                 String message = "Vous n'êtes pas connecté !!";
                 request.setAttribute("message", message);
                 destinationPage = "vues/connection/login";
-            }
-            else
-            {
+            } else {
                 request.setAttribute("actions", actionService.getAllAction());
                 destinationPage = "/vues/mission/ajouterMission";
             }
@@ -79,8 +77,8 @@ public class ControllerMission {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value ="/add")
-    public ModelAndView add(HttpServletRequest request, HttpServletResponse response ) {
+    @RequestMapping(method = RequestMethod.POST, value = "/add")
+    public ModelAndView add(HttpServletRequest request, HttpServletResponse response) {
         String destinationPage;
         try {
             session = request.getSession();
@@ -88,32 +86,42 @@ public class ControllerMission {
                 String message = "Vous n'êtes pas connecté !!";
                 request.setAttribute("message", message);
                 destinationPage = "vues/connection/login";
-            }
-            else
-            {
+            } else {
                 String libelle = request.getParameter("libelle");
                 MissionEntity missionEntity = new MissionEntity();
 
                 missionEntity.setInscriptionsById(new ArrayList<>());
                 missionEntity.setWording(libelle);
-
-
+                missionEntity.setActionMissionsById(new ArrayList<>());
                 MissionEntity mission = missionService.addMission(missionEntity);
 
+                List<ActionEntity> actions = new ArrayList<>();
 
-                /*
-                String[] actions = request.getParameterValues("actions");
-                if(actions!=null && actions.length>0)
-                    for(String idAction : actions){
-                        ActionMissionEntity actionMissionEntity = new ActionMissionEntity();
-                        //actionMissionEntity.setFkMission(mission.getId());
-                        //actionMissionEntity.setActionByFkAction(actionService.getAction(Integer.parseInt(idAction)));
-                        //actionMissionEntity.setMissionByFkMission(null);
-                        actionMissionService.addActionMission(actionMissionEntity);
+                // Obtenez les identifiants des actions sélectionnées depuis les paramètres de la requête
+                String[] selectedActionIds = request.getParameterValues("actions");
+                if (selectedActionIds != null) {
+                    for (String actionId : selectedActionIds) {
+                        ActionEntity action = actionService.getAction(Integer.parseInt(actionId));
+                        actions.add(action);
                     }
-                */
+                }
+
+                List<ActionMissionEntity> actionMissions = new ArrayList<>();
+
+                for (ActionEntity action : actions) {
+                    ActionMissionEntity actionMission = new ActionMissionEntity();
+                    actionMission.setFkMission(mission.getId());
+                    actionMission.setMissionByFkMission(mission);
+                    actionMission.setFkAction(action.getId());
+                    actionMission.setActionByFkAction(action);
+
+                    actionMissions.add(actionMission);
+                }
 
 
+
+                missionEntity.setId(mission.getId());
+                missionService.editMission(missionEntity,actionMissions );
 
                 request.setAttribute("missions", missionService.getAll());
                 destinationPage = "/vues/mission/afficherMissions";
@@ -127,8 +135,8 @@ public class ControllerMission {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value ="/editForm/{id}")
-    public ModelAndView edit(HttpServletRequest request, @PathVariable(value = "id") int id ) {
+    @RequestMapping(method = RequestMethod.GET, value = "/editForm/{id}")
+    public ModelAndView edit(HttpServletRequest request, @PathVariable(value = "id") int id) {
         String destinationPage;
         try {
             session = request.getSession();
@@ -136,11 +144,20 @@ public class ControllerMission {
                 String message = "Vous n'êtes pas connecté !!";
                 request.setAttribute("message", message);
                 destinationPage = "vues/connection/login";
-            }
-            else
-            {
+            } else {
                 MissionEntity mission = missionService.getMissionById(id);
                 request.setAttribute("mission", mission);
+
+                request.setAttribute("actions", actionService.getAllAction());
+
+                ArrayList<Integer> actionMission = new ArrayList<>();
+                Collection<ActionMissionEntity> actionMissionsById = mission.getActionMissionsById();
+                for(ActionMissionEntity actionMissionEntity : actionMissionsById){
+                    actionMission.add(actionMissionEntity.getFkAction());
+                }
+
+                request.setAttribute("actionMission", actionMission);
+
                 destinationPage = "/vues/mission/editMission";
             }
         } catch (Exception e) {
@@ -152,8 +169,8 @@ public class ControllerMission {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value ="/edit")
-    public ModelAndView edit(HttpServletRequest request, HttpServletResponse response ) {
+    @RequestMapping(method = RequestMethod.POST, value = "/edit")
+    public ModelAndView edit(HttpServletRequest request, HttpServletResponse response) {
         String destinationPage;
         try {
             session = request.getSession();
@@ -161,15 +178,44 @@ public class ControllerMission {
                 String message = "Vous n'êtes pas connecté !!";
                 request.setAttribute("message", message);
                 destinationPage = "vues/connection/login";
-            }
-            else
-            {
+            } else {
                 int id = Integer.parseInt(request.getParameter("id"));
                 String libelle = request.getParameter("libelle");
                 MissionEntity missionEntity = new MissionEntity();
                 missionEntity.setId(id);
                 missionEntity.setWording(libelle);
-                missionService.editMission(missionEntity);
+
+                List<ActionEntity> actions = new ArrayList<>();
+
+                // Obtenez les identifiants des actions sélectionnées depuis les paramètres de la requête
+                String[] selectedActionIds = request.getParameterValues("actions");
+                if (selectedActionIds != null) {
+                    for (String actionId : selectedActionIds) {
+                        ActionEntity action = actionService.getAction(Integer.parseInt(actionId));
+                        actions.add(action);
+                    }
+                }
+
+                List<ActionMissionEntity> actionMissions = new ArrayList<>();
+                for (ActionEntity action : actions) {
+                    ActionMissionEntity actionMission = new ActionMissionEntity();
+                    actionMission.setFkMission(missionEntity.getId());
+                    actionMission.setMissionByFkMission(missionEntity);
+                    actionMission.setFkAction(action.getId());
+                    actionMission.setActionByFkAction(action);
+                    actionMissions.add(actionMission);
+                }
+
+                // Définissez la liste d'actions pour la mission
+                missionEntity.setActionMissionsById(actionMissions);
+
+                MissionEntity mission = missionService.getMissionById(id);
+                for (ActionMissionEntity actionMission : mission.getActionMissionsById()) {
+                    actionMissionService.deleteActionMission(actionMission);
+                }
+
+                //missionService.editMission(missionEntity);
+
                 request.setAttribute("missions", missionService.getAll());
                 destinationPage = "/vues/mission/afficherMissions";
             }
@@ -182,8 +228,8 @@ public class ControllerMission {
         return new ModelAndView(destinationPage);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value ="/delete/{id}")
-    public ModelAndView delete(HttpServletRequest request, @PathVariable(value = "id") int id ) {
+    @RequestMapping(method = RequestMethod.GET, value = "/delete/{id}")
+    public ModelAndView delete(HttpServletRequest request, @PathVariable(value = "id") int id) {
         String destinationPage;
         try {
             session = request.getSession();
@@ -191,9 +237,7 @@ public class ControllerMission {
                 String message = "Vous n'êtes pas connecté !!";
                 request.setAttribute("message", message);
                 destinationPage = "vues/connection/login";
-            }
-            else
-            {
+            } else {
                 missionService.delete(id);
                 request.setAttribute("missions", missionService.getAll());
                 destinationPage = "/vues/mission/afficherMissions";

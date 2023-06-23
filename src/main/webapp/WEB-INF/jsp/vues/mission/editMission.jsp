@@ -23,6 +23,13 @@
         <label for="libelle">Libellé</label>
         <input type="text" class="form-control" id="libelle" name="libelle" value="${mission.wording}">
     </div>
+    <p>Actions : </p>
+    <c:forEach items="${actions}" var="action">
+        <div>
+            <input type="checkbox" id=${action.id} value=${action.id} name="actions" ${actionMission.contains(action.id) ? 'checked' : ''}>
+            <label for=${action.id}>${action.wording}</label>
+        </div>
+    </c:forEach>
     <button type="submit" class="btn btn-primary">Enregistrer</button>
 </form>
 
