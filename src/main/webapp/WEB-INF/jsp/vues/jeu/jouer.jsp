@@ -5,7 +5,8 @@
   Time: 15:04
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <html>
 <head>
     <title>List Action Apprenant</title>
@@ -25,11 +26,23 @@
                     <h2>${actionIndicateurDTO.action.wording}</h2>
 
                     <c:forEach items="${actionIndicateurDTO.indicators}" var="indicateur">
-                        <label for="choix${indicateur.id}">${indicateur.wording}</label><br>
-                        <input type="checkbox" id="choix${indicateur.id}" name="checkboxesChecked"
-                               value="${indicateur.id}">
+                        <div class="checkbox-wrapper">
+                            <label for="choix${indicateur.id}">${indicateur.wording}</label>
+                            <input type="checkbox" id="choix${indicateur.id}" name="checkboxesChecked"
+                                   value="${indicateur.id}">
+                        </div>
                     </c:forEach>
                 </c:forEach>
+
+                <h2>A cocher si rien ne devrait être coché</h2>
+
+                <div class="checkbox-wrapper">
+                    <label for="choix-1">Aucun élement sélectionné</label>
+                    <input type="checkbox" id="choix-1" name="checkboxesChecked"
+                           value="-1">
+                </div>
+
+
 
                 <button type="submit">Valider le questionnaire</button>
             </form>
@@ -37,6 +50,36 @@
     </div>
 
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var checkboxes = document.querySelectorAll("input[name='checkboxesChecked']");
+        var aucunElementCheckbox = document.getElementById("choix-1");
+
+        // Fonction pour vérifier l'état des autres checkboxes
+        function checkOtherCheckboxes() {
+            var isAnyChecked = false;
+
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    isAnyChecked = true;
+                    break;
+                }
+            }
+
+            // Cocher/décocher la checkbox "Aucun élément sélectionné" en fonction de l'état des autres checkboxes
+            aucunElementCheckbox.checked = !isAnyChecked;
+        }
+
+        // Ajouter un écouteur d'événement sur chaque autre checkbox
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].addEventListener("change", checkOtherCheckboxes);
+        }
+
+        // Vérifier l'état initial des autres checkboxes au chargement de la page
+        checkOtherCheckboxes();
+    });
+</script>
 
 </body>
 </html>

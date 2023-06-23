@@ -293,7 +293,10 @@ public class ControllerJeu {
             // Récupération des indicateurs sélectionnés
             String[] options = request.getParameterValues("checkboxesChecked");
             List<String> idIndicateursSelected = new ArrayList<String>(Arrays.asList(options));
-            System.out.println("idIndicateursSelected : "+idIndicateursSelected);
+            if (idIndicateursSelected.get(0) == "-1")
+            {
+                idIndicateursSelected.remove(0);
+            }
 
             int idJeu = Integer.parseInt(request.getParameter("idJeu"));
             int idApprenant = Integer.parseInt(request.getParameter("idApprenant"));
@@ -303,10 +306,6 @@ public class ControllerJeu {
             List<ActionEntity> listeActions = actionJeuService.getActionsByJeu(idJeu);
 
             LinkedHashMap<ActionEntity, Integer> actionsAAfficherScore = new LinkedHashMap();
-
-            System.out.println("idJeu : "+idJeu);
-            System.out.println("idApprenant : "+idApprenant);
-            System.out.println("options : "+options);
 
             // Pour chaque inscription, on calcule le score et on le met à jour
             for (InscriptionEntity inscription : listeInscriptions)
@@ -380,27 +379,41 @@ public class ControllerJeu {
         try {
             System.out.println("idUser: " + idUser);
             listeJeuxPourUtilisateur = unUtilisateurJeuService.getInscriptionByUsers(idUser);
-            System.out.println("liste jeux : " + listeJeuxPourUtilisateur.get(0));
 
-            // Récupérer les informations des jeux associés
-            listeJeux = new ArrayList<>();
-            for (UtilisateurJeuEntity jeu : listeJeuxPourUtilisateur) {
-                //On récupère le jeu grâce à son id
-                JeuEntity jeuEntity = jeuService.getJeubyID(jeu.getFkJeu());
-                //On récupère les actions lié au jeu
-                listeJeux.add(jeuEntity);
-                Utilisateurs = ServiceUtilisateur.getUserByFkKey(idUser);
+            if (listeJeuxPourUtilisateur.size()!=0 || listeJeuxPourUtilisateur != null)
+            {
+                System.out.println("liste jeux : " + listeJeuxPourUtilisateur.get(0));
+
+                // Récupérer les informations des jeux associés
+                listeJeux = new ArrayList<>();
+                for (UtilisateurJeuEntity jeu : listeJeuxPourUtilisateur) {
+                    //On récupère le jeu grâce à son id
+                    JeuEntity jeuEntity = jeuService.getJeubyID(jeu.getFkJeu());
+                    //On récupère les actions lié au jeu
+                    listeJeux.add(jeuEntity);
+                    Utilisateurs = ServiceUtilisateur.getUserByFkKey(idUser);
+                }
+                request.setAttribute("Utilisateur", Utilisateurs);
+                request.setAttribute("controllerType", "getJeuxRealise");
+                request.setAttribute("listeJeux", listeJeux);
+                request.setAttribute("listeJeuxRealise", listeJeuxPourUtilisateur);
+                destinationPage = "vues/jeu/listeJeuxRealise";
+            }
+            else
+            {
+                request.setAttribute("erreurType", "afficherJeuApprenant");
+                request.setAttribute("nom_prenom", Utilisateurs.getForename()+" "+Utilisateurs.getSurname());
+                destinationPage = "vues/aucuneDonneesVue";
             }
 
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            request.setAttribute("erreurType", "afficherJeuApprenant");
+            destinationPage = "vues/aucuneDonneesVue";
+        }
 
-
-            request.setAttribute("Utilisateur", Utilisateurs);
-            request.setAttribute("controllerType", "getJeuxRealise");
-            System.out.println("numéro"+ idUser);
-            request.setAttribute("listeJeux", listeJeux);
-            request.setAttribute("listeJeuxRealise", listeJeuxPourUtilisateur);
-            destinationPage = "vues/jeu/listeJeuxRealise";
-        } catch (MonException e) {
+        catch (MonException e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "/vues/Erreur";
         }

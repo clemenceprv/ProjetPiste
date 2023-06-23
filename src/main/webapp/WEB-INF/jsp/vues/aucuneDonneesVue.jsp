@@ -5,7 +5,8 @@
   Time: 09:54
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <html>
 <head>
     <title>Modifier Utilisateur</title>
@@ -35,6 +36,14 @@
     <div class="d-flex">
         <p>Ajouter une action</p>
         <a class="btn btn-primary" href="/action/addForm" role="button">Ajouter</a>
+    </div>
+</c:if>
+
+<c:if test="${erreurType=='afficherJeuApprenant'}">
+    <p>Aucun jeu n'a été réalisé pour cet apprenant</p>
+    <div class="d-flex">
+        <p>Retour choix des apprenant</p>
+        <a class="btn btn-primary" href="/jeu/choixApprenant?controllerType=voirJeu" role="button">Retour</a>
     </div>
 </c:if>
 
