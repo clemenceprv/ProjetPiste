@@ -7,11 +7,9 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 public class ActionMissionEntityPK implements Serializable {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "fk_action")
     @Id
     private int fkAction;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "fk_mission")
     @Id
     private int fkMission;

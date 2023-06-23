@@ -30,15 +30,9 @@ public class MissionService implements IMissionService {
     }
 
     public void editMission(MissionEntity missionEntity, Collection<ActionMissionEntity> actionMissions) {
-        MissionEntity mission = missionRepository.findById(missionEntity.getId()).get();
-        //missionRepository.delete(mission);
-        //mission = new MissionEntity();
-        //mission.setId(missionEntity.getId());
-        //System.out.println("ICI"+mission.getActionMissionsById());
-        // Définissez la liste d'actions pour la mission
-        //mission.setActionMissionsById(actionMissions);
-        //mission.setWording(missionEntity.getWording());
-        //missionEntity.setActionMissionsById(new ArrayList<>());
+        MissionEntity mission = missionRepository.findById(missionEntity.getId());
+        mission.setActionMissionsById(actionMissions);
+        mission.setWording(missionEntity.getWording());
         missionRepository.save(mission);
     }
 
@@ -49,11 +43,11 @@ public class MissionService implements IMissionService {
 
     @Override
     public MissionEntity getMissionById(int id) {
-        return missionRepository.findById(id).get();
+        return missionRepository.findById(id);
     }
 
     public void delete(int id) {
-        MissionEntity mission = missionRepository.findById(id).get();
+        MissionEntity mission = missionRepository.findById(id);
         missionRepository.delete(mission);
     }
 }

@@ -7,12 +7,10 @@ import javax.persistence.*;
 @IdClass(ActionMissionEntityPK.class)
 public class ActionMissionEntity {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "fk_action")
     private int fkAction;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "fk_mission")
     private int fkMission;
