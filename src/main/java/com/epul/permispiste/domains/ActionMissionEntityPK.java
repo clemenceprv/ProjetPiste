@@ -9,11 +9,9 @@ import java.io.Serializable;
 public class ActionMissionEntityPK implements Serializable {
     @Column(name = "fk_action")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int fkAction;
     @Column(name = "fk_mission")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int fkMission;
 
     public int getFkAction() {

@@ -17,8 +17,8 @@ public class ActionMissionService {
     @Autowired
     private ActionMissionRepository actionMissionRepository;
 
-    public void addActionMission(ActionMissionEntity actionMissionEntity) {
-        actionMissionRepository.save(actionMissionEntity);
+    public void deleteActionMission(ActionMissionEntity actionMission) {
+        actionMissionRepository.delete(actionMission);
     }
 
 }

@@ -61,7 +61,13 @@ public class MissionEntity {
     }
 
     public void setActionMissionsById(Collection<ActionMissionEntity> actionMissionsById) {
-        this.actionMissionsById = actionMissionsById;
+        if (this.actionMissionsById == null) {
+            this.actionMissionsById = actionMissionsById;
+        }else {
+            this.actionMissionsById.retainAll(actionMissionsById);
+            this.actionMissionsById.addAll(actionMissionsById);
+        }
+
     }
 
     public Collection<InscriptionEntity> getInscriptionsById() {

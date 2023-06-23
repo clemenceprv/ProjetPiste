@@ -1,23 +1,23 @@
 package com.epul.permispiste.service;
 
+import com.epul.permispiste.domains.ActionEntity;
+import com.epul.permispiste.domains.ActionMissionEntity;
 import com.epul.permispiste.domains.MissionEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.epul.permispiste.repositories.MissionRepository;
 
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
 @Service
-public class MissionService {
-
-    private MissionRepository missionRepository;
+public class MissionService implements IMissionService {
 
     @Autowired
-    public MissionService(MissionRepository missionRepository) {
-        this.missionRepository = missionRepository;
-    }
+    private MissionRepository missionRepository;
 
     public List<MissionEntity> getAll(){
         List<MissionEntity> missions=null;
@@ -29,18 +29,19 @@ public class MissionService {
         return missions;
     }
 
-    public void editMission(MissionEntity missionEntity) {
+    public void editMission(MissionEntity missionEntity, Collection<ActionMissionEntity> actionMissions) {
         MissionEntity mission = missionRepository.findById(missionEntity.getId());
+        mission.setActionMissionsById(actionMissions);
         mission.setWording(missionEntity.getWording());
         missionRepository.save(mission);
     }
 
-
+    @Override
     public MissionEntity addMission(MissionEntity missionEntity)  {
         return missionRepository.save(missionEntity);
     }
 
-
+    @Override
     public MissionEntity getMissionById(int id) {
         return missionRepository.findById(id);
     }
@@ -49,7 +50,4 @@ public class MissionService {
         MissionEntity mission = missionRepository.findById(id);
         missionRepository.delete(mission);
     }
-
-    public List<MissionEntity> findAll() { return missionRepository.findAll();}
-    public MissionEntity findMissionById(int id) {return missionRepository.findById(id); }
 }
