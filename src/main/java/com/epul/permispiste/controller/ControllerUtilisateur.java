@@ -1,5 +1,6 @@
 package com.epul.permispiste.controller;
 
+import com.epul.permispiste.domains.ApprenantEntity;
 import com.epul.permispiste.domains.UtilisateurEntity;
 import com.epul.permispiste.service.UtilisateurService;
 import com.epul.permispiste.utilitaires.MonMotPassHash;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
+import java.util.List;
 
 @RequestMapping("/utilisateur")
 @RestController
@@ -22,25 +24,23 @@ public class ControllerUtilisateur {
 
     private HttpSession session;
 
-    @RequestMapping(value = "/index")
-    public ModelAndView index(HttpServletRequest request) throws Exception {
-        String destinationPage;
-        try {
-            request.setAttribute("utilisateur", utilisateurService.getAll());
-            destinationPage = "/vues/utilisateur/afficherUtilisateurs";
-        } catch (Exception e) {
-            request.setAttribute("MesErreurs", e.getMessage());
-            destinationPage = "/vues/Erreur";
-        }
-        return new ModelAndView(destinationPage);
-    }
-
     @RequestMapping(value = "/indexApprenant")
     public ModelAndView indexApprenant(HttpServletRequest request) throws Exception {
         String destinationPage;
         try {
-            request.setAttribute("apprenants", utilisateurService.getAllApprenant());
-            destinationPage = "/vues/apprenant/afficherApprenants";
+            List<UtilisateurEntity> listeApprenants = utilisateurService.getAllApprenant();
+            if (listeApprenants.size() == 0)
+            {
+                // S'il n'y a pas de données, on change la vue
+                request.setAttribute("erreurType", "Apprenant");
+                destinationPage = "/vues/aucuneDonneesVue";
+            }
+            else
+            {
+                request.setAttribute("apprenants", utilisateurService.getAllApprenant());
+                destinationPage = "/vues/apprenant/afficherApprenants";
+            }
+
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
             destinationPage = "/vues/Erreur";
@@ -223,8 +223,18 @@ public class ControllerUtilisateur {
                 UtilisateurEntity utilisateur = (UtilisateurEntity) session.getAttribute("utilisateur");
                 if (utilisateur.getRole().equals("admin")) {
                     utilisateurService.delete(id);
-                    request.setAttribute("apprenants", utilisateurService.getAllApprenant());
-                    destinationPage = "/vues/apprenant/afficherApprenants";
+                    List<UtilisateurEntity> utilisateurEntities = utilisateurService.getAllApprenant();
+                    if (utilisateurEntities.size() == 0)
+                    {
+                        request.setAttribute("erreurType", "Apprenant");
+                        destinationPage = "/vues/aucuneDonneesVue";
+                    }
+                    else
+                    {
+                        request.setAttribute("apprenants", utilisateurEntities);
+                        destinationPage = "/vues/apprenant/afficherApprenants";
+
+                    }
                 } else {
                     destinationPage = "/vues/Erreur";
                 }

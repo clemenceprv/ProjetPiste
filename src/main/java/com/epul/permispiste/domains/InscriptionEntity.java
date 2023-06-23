@@ -27,7 +27,7 @@ public class InscriptionEntity {
     @ManyToOne
     @JoinColumn(name = "fk_mission", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private MissionEntity missionByFkMission;
-    @OneToMany(mappedBy = "inscriptionByFkInscription")
+    @OneToMany(mappedBy = "inscriptionByFkInscription", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<InscriptionActionEntity> inscriptionActionsById;
 
     public int getId() {

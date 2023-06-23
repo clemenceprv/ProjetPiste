@@ -47,8 +47,17 @@ public class ControllerMission {
             }
             else
             {
-                request.setAttribute("missions", missionService.getAll());
-                destinationPage = "/vues/mission/afficherMissions";
+                List<MissionEntity> missions = missionService.getAll();
+                if (missions.size() == 0)
+                {
+                    request.setAttribute("erreurType", "Mission");
+                    destinationPage = "/vues/aucuneDonneesVue";
+                }
+                else
+                {
+                    request.setAttribute("missions", missions);
+                    destinationPage = "/vues/mission/afficherMissions";
+                }
             }
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
@@ -259,8 +268,17 @@ public class ControllerMission {
                 destinationPage = "vues/connection/login";
             } else {
                 missionService.delete(id);
-                request.setAttribute("missions", missionService.getAll());
-                destinationPage = "/vues/mission/afficherMissions";
+                List<MissionEntity> missions = missionService.getAll();
+                if (missions.size() == 0)
+                {
+                    request.setAttribute("erreurType", "Mission");
+                    destinationPage = "/vues/aucuneDonneesVue";
+                }
+                else
+                {
+                    request.setAttribute("missions", missions);
+                    destinationPage = "/vues/mission/afficherMissions";
+                }
             }
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());

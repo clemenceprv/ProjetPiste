@@ -31,9 +31,9 @@ public class UtilisateurEntity {
     @Basic
     @Column(name = "forename")
     private String forename;
-    @OneToMany(mappedBy = "utilisateurByFkUser")
+    @OneToMany(mappedBy = "utilisateurByFkUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<InscriptionEntity> inscriptionsByNumUtil;
-    @OneToMany(mappedBy = "utilisateurByFkUtilisateur")
+    @OneToMany(mappedBy = "utilisateurByFkUtilisateur", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<UtilisateurJeuEntity> utilisateurJeusByNumUtil;
 
     public int getNumUtil() {

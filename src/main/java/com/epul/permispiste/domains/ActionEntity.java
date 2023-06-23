@@ -23,15 +23,15 @@ public class ActionEntity {
     @ManyToOne
     @JoinColumn(name = "fk_action", referencedColumnName = "id")
     private ActionEntity actionByFkAction;
-    @OneToMany(mappedBy = "actionByFkAction")
+    @OneToMany(mappedBy = "actionByFkAction", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<ActionEntity> actionsById;
-    @OneToMany(mappedBy = "actionByFkAction")
+    @OneToMany(mappedBy = "actionByFkAction", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<ActionJeuEntity> actionJeusById;
-    @OneToMany(mappedBy = "actionByFkAction")
+    @OneToMany(mappedBy = "actionByFkAction", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<ActionMissionEntity> actionMissionsById;
-    @OneToMany(mappedBy = "actionByFkAction")
+    @OneToMany(mappedBy = "actionByFkAction", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<IndicatorEntity> indicatorsById;
-    @OneToMany(mappedBy = "actionByFkAction")
+    @OneToMany(mappedBy = "actionByFkAction", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<InscriptionActionEntity> inscriptionActionsById;
 
     public int getId() {

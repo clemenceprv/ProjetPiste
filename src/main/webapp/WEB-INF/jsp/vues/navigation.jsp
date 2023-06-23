@@ -5,6 +5,7 @@
   Time: 08:04
   To change this template use File | Settings | File Templates.
 --%>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Permis piste</a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">

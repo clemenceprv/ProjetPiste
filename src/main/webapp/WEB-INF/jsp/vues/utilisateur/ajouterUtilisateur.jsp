@@ -37,7 +37,7 @@
     </div>
     <div class="form-group">
         <label for="motPasse">Mot de passe</label>
-        <input type="text" class="form-control" id="motPasse" name="motPasse">
+        <input type="password" class="form-control" id="motPasse" name="motPasse">
     </div>
     <button type="submit" class="btn btn-primary">Enregistrer</button>
 </form>

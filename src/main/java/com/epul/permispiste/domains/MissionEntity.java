@@ -15,9 +15,9 @@ public class MissionEntity {
     @Basic
     @Column(name = "wording")
     private String wording;
-    @OneToMany(mappedBy = "missionByFkMission")
+    @OneToMany(mappedBy = "missionByFkMission", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<ActionMissionEntity> actionMissionsById;
-    @OneToMany(mappedBy = "missionByFkMission")
+    @OneToMany(mappedBy = "missionByFkMission", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<InscriptionEntity> inscriptionsById;
 
     public int getId() {
