@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @RequestMapping("/action")
@@ -33,8 +34,17 @@ public class ControllerAction {
             }
             else
             {
-                request.setAttribute("actions", actionService.getAllAction());
-                destinationPage = "/vues/action/afficherActions";
+                List<ActionEntity> actionEntityList = actionService.getAllAction();
+                if (actionEntityList.size() == 0)
+                {
+                    request.setAttribute("erreurType", "Action");
+                    destinationPage = "/vues/aucuneDonneesVue";
+                }
+                else
+                {
+                    request.setAttribute("actions", actionEntityList);
+                    destinationPage = "/vues/action/afficherActions";
+                }
             }
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());
@@ -168,8 +178,17 @@ public class ControllerAction {
             else
             {
                 actionService.delete(id);
-                request.setAttribute("actions", actionService.getAllAction());
-                destinationPage = "/vues/action/afficherActions";
+                List<ActionEntity> actionEntityList = actionService.getAllAction();
+                if (actionEntityList.size() == 0)
+                {
+                    request.setAttribute("erreurType", "Action");
+                    destinationPage = "/vues/aucuneDonneesVue";
+                }
+                else
+                {
+                    request.setAttribute("actions", actionEntityList);
+                    destinationPage = "/vues/action/afficherActions";
+                }
             }
         } catch (Exception e) {
             request.setAttribute("MesErreurs", e.getMessage());

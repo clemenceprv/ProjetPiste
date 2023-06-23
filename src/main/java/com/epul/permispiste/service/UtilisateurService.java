@@ -9,24 +9,28 @@ import java.util.List;
 @Service
 public class UtilisateurService implements IUtilisateurService {
 
-    @Autowired
     private UtilisateurRepository utilisateurRepository;
 
-    public List<UtilisateurEntity> getAll(){
-        List<UtilisateurEntity> utilisateurs=null;
+    @Autowired
+    public UtilisateurService(UtilisateurRepository utilisateurRepository) {
+        this.utilisateurRepository = utilisateurRepository;
+    }
+
+    public List<UtilisateurEntity> getAll() {
+        List<UtilisateurEntity> utilisateurs = null;
         try {
             utilisateurs = utilisateurRepository.findAll();
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
         return utilisateurs;
     }
 
-    public List<UtilisateurEntity> getAllApprenant(){
-        List<UtilisateurEntity> utilisateurs=null;
+    public List<UtilisateurEntity> getAllApprenant() {
+        List<UtilisateurEntity> utilisateurs = null;
         try {
             utilisateurs = utilisateurRepository.findAllByRoleEquals("learner");
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
         return utilisateurs;
@@ -56,7 +60,7 @@ public class UtilisateurService implements IUtilisateurService {
     }
 
     @Override
-    public void addUtilisateur(UtilisateurEntity utilisateurEntity)  {
+    public void addUtilisateur(UtilisateurEntity utilisateurEntity) {
         utilisateurRepository.save(utilisateurEntity);
     }
 
@@ -65,5 +69,10 @@ public class UtilisateurService implements IUtilisateurService {
         utilisateur.setForename(utiisateurEntity.getForename());
         utilisateur.setSurname(utiisateurEntity.getSurname());
         utilisateurRepository.save(utilisateur);
+
+    }
+
+    public UtilisateurEntity getUserByFkKey(int idUser) {
+        return utilisateurRepository.findUtilisateurEntitiesByNumUtil(idUser);
     }
 }

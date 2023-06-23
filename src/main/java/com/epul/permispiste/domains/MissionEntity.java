@@ -1,4 +1,6 @@
+
 package com.epul.permispiste.domains;
+
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -13,9 +15,9 @@ public class MissionEntity {
     @Basic
     @Column(name = "wording")
     private String wording;
-    @OneToMany(mappedBy = "missionByFkMission")
+    @OneToMany(mappedBy = "missionByFkMission", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<ActionMissionEntity> actionMissionsById;
-    @OneToMany(mappedBy = "missionByFkMission")
+    @OneToMany(mappedBy = "missionByFkMission", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<InscriptionEntity> inscriptionsById;
 
     public int getId() {
@@ -70,3 +72,4 @@ public class MissionEntity {
         this.inscriptionsById = inscriptionsById;
     }
 }
+

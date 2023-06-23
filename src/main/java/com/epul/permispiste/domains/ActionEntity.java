@@ -1,3 +1,4 @@
+
 package com.epul.permispiste.domains;
 
 import javax.persistence.*;
@@ -22,17 +23,15 @@ public class ActionEntity {
     @ManyToOne
     @JoinColumn(name = "fk_action", referencedColumnName = "id")
     private ActionEntity actionByFkAction;
-    @OneToMany(mappedBy = "actionByFkAction")
+    @OneToMany(mappedBy = "actionByFkAction", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<ActionEntity> actionsById;
-    @OneToMany(mappedBy = "actionByFkAction")
+    @OneToMany(mappedBy = "actionByFkAction", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<ActionJeuEntity> actionJeusById;
-    @OneToMany(mappedBy = "actionByFkAction")
-    //,cascade = CascadeType.ALL,
-      //      orphanRemoval = true)
+    @OneToMany(mappedBy = "actionByFkAction", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<ActionMissionEntity> actionMissionsById;
-    @OneToMany(mappedBy = "actionByFkAction")
+    @OneToMany(mappedBy = "actionByFkAction", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<IndicatorEntity> indicatorsById;
-    @OneToMany(mappedBy = "actionByFkAction")
+    @OneToMany(mappedBy = "actionByFkAction", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<InscriptionActionEntity> inscriptionActionsById;
 
     public int getId() {
@@ -139,3 +138,4 @@ public class ActionEntity {
         this.inscriptionActionsById = inscriptionActionsById;
     }
 }
+
