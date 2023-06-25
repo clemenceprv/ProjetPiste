@@ -30,8 +30,8 @@
                     <h2>Pour commencer, vous pouvez vous :</h2>
                     <ul>
                         <li>1) <a>Enregistrer en tant qu'apprenant</a></li>
-                        <li>2) <a>Inscrire à un jeu depuis la liste</a></li>
-                        <li>3) <a>Accéder à la liste des missions pour valider des actions</a></li>
+                        <li>2) <a>Affecter une mission depuis la liste</a></li>
+                        <li>3) <a>Jouer à un jeu</a></li>
                     </ul>
 
                     <h3>D'autres informations comme la liste des apprenants ou des actions sont disponibles en haut à
